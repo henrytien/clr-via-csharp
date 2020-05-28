@@ -4,7 +4,7 @@
 
 # Performance
 
-
+When you learn CSharp language, here are many you should care performance tips. This is a note that helps you have good performance and hurting performance.
 
 ## Improving performance
 
@@ -59,7 +59,13 @@
 
 12. To improve performance and also to avoid considering an extension method that you may not want, the C# compiler requires that you “import” extension meth- ods. P201
 
-13. 
+13. Be aware that calling a method that takes a variable number of arguments in- curs an additional performance hit unless you explicitly pass null. 
+
+14. Because a generic algorithm can now be created to work with a specific value type, the instances of the value type can be passed by value, and the CLR no longer has to do any boxing. 
+
+15. [String pooling](https://docs.microsoft.com/en-us/dotnet/api/system.string.intern?view=netcore-3.1) is another way to improve the performance of strings. P332
+
+16. 
 
 ## Hurt perfomance
 
@@ -79,7 +85,15 @@
 
 5. The CLR would have to verify at each write that the write was not occurring to a constant object, and this would hurt performance significantly. P225
 
-6. 
+6. You do need to realize that the CLR generates native code for each method the first time the method is called for a particular data type. This will increase an application’s working set size, which will hurt performance. P270 
+
+7. If you perform a lot of string manipulations, you end up creating a lot of String objects on the heap, which causes more frequent garbage collections, thus hurting your application’s performance. P323 
+
+8. Checking strings for equality is a common operation for many ap- plications—this task can hurt performance significantly. It is good way use  function `Object.ReferenceEquals`P329 
+
+9. Dynamically growing the array hurts performance; avoid this by setting a good initial capacity. P337
+
+10. 
 
 # Recommend
 
@@ -102,7 +116,21 @@
 
 
 
-# Efficient
+# Why
+
+# Benefit
+
+## Why use generics
+
+- Source code protection
+
+- Type safety
+
+- Clear source
+
+- Better performance
+
+  
 
 # Cannot
 
@@ -128,6 +156,8 @@
   
 
 # Avoid
+
+
 
 
 
@@ -172,4 +202,15 @@ The easiest way to access the System Monitor control is to run PerfMon.exe.
 
 
 
-# Funny
+# Reference
+
+- [awesome-dotnet](https://github.com/quozd/awesome-dotnet) 
+
+  A collection of awesome .NET libraries, tools, frameworks, and software.
+
+  
+
+
+
+
+
