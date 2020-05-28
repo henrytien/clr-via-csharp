@@ -217,16 +217,6 @@ The easiest way to access the System Monitor control is to run PerfMon.exe.
 
 
 
-
-
-
-
-
-
-
-
-
-
 # FAQ
 
 
