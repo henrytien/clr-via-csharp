@@ -89,7 +89,8 @@
    - Second, virtual methods cannot be inlined by the JIT compiler, which further hurts performance. 
    - Third, virtual methods make versioning of components more brittle.
    - Fourth, when defining a base type, it is common to offer a set of convenience overloaded methods. 
-3. 
+3. When normalizing strings, it is highly recommended that you use ToUpper­ Invariant instead of ToLowerInvariant because Microsoft has optimized the code for performing uppercase comparisons. P325
+4. 
 
 # Rules and Guidelines
 
@@ -156,3 +157,7 @@ Enforced by the Code Analysis tool (FxCopCmd.exe) in Visual Studio.
 
 
 # FAQ
+
+
+
+# Funny
