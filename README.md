@@ -148,6 +148,18 @@ I always use a tool such as ILDasm.exe to view the IL code for my methods and se
 
 Enforced by the Code Analysis tool (FxCopCmd.exe) in Visual Studio.
 
+## PerfMon.exe
+
+The easiest way to access the System Monitor control is to run PerfMon.exe.
+
+## PerfViwe
+
+[PerfView](https://github.com/microsoft/perfview) is a free performance-analysis tool that helps isolate CPU and memory-related performance issues.
+
+
+
+
+
 
 
 
