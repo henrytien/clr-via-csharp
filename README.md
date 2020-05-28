@@ -138,7 +138,6 @@ When you learn CSharp language, here are many you should care performance tips. 
    - Fourth, when defining a base type, it is common to offer a set of convenience overloaded methods. 
 3. When normalizing strings, it is highly recommended that you use ToUpper­ Invariant instead of ToLowerInvariant because Microsoft has optimized the code for performing uppercase comparisons. P325
 4. I’d highly recommend against performing synchronous I/O operations in a server application. P719 
-5. 
 
 # Rules and Guidelines
 
@@ -150,9 +149,9 @@ When you learn CSharp language, here are many you should care performance tips. 
 
 ## Declare a type as a value type
 
-​	■  Instances of the type are small (approximately 16 bytes or less).
+-  Instances of the type are small (approximately 16 bytes or less).
 
-​	■  Instances of the type are large (greater than 16 bytes) and are not passed as method param- eters 		or returned from methods.
+-  Instances of the type are large (greater than 16 bytes) and are not passed as method param- eters 		or returned from methods.
 
 
 
@@ -190,14 +189,6 @@ When you learn CSharp language, here are many you should care performance tips. 
 - **Performance**
 
 - **Security and predictability**
-
-  
-
-# Avoid
-
-
-
-
 
 # Tools
 
