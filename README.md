@@ -179,7 +179,7 @@ When you learn CSharp language, here are many you should care performance tips. 
 - You can’t define a new value type or a new reference type by using a value type as a base class, you shouldn’t introduce any new virtual methods into a value type. No methods can be abstract, and all methods are implicitly sealed (can’t be overridden).
 - When you assign a value type variable to another value type variable, a field-by-field copy is made. When you assign a reference type variable to another reference type variable, only the memory address is copied.
 - Two or more reference type variables can refer to a single object in the heap, allowing operations on one variable to affect the object referenced by the other variable. On the other hand, value type variables are distinct objects, and it’s not possible for operations on one value type variable to affect another.
-- Because unboxed value types aren’t allocated on the heap, the storage allocated for them is freed as soon as the method that defines an instance of the type is no longer active as op- posed to waiting for a garbage collection.
+- Because unboxed value types aren’t allocated on the heap, the storage allocated for them is freed as soon as the method that defines an instance of the type is no longer active as opposed to waiting for a garbage collection.
 
 ## Sealed class vs unsealed class
 
