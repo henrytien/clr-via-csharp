@@ -185,12 +185,19 @@ When you learn CSharp language, here are many you should care performance tips. 
 ## Why use generics
 
 - Source code protection
-
 - Type safety
-
 - Clear source
-
 - Better performance
+
+# Restrictions
+
+## Async functions
+
+- You cannot turn your application's `Main` method into an `async` function. 
+- You cannot have any `out` or `ref` parameters on an `async` function. 
+- You cannot use the `await` operator inside a `catch`, `finally`, or `unsafe` block.
+- You cannot take a lock that supports thread ownership or recurcion before an `await` operator and release it after the `await` operator.
+- Within a query expression, the `await` operator may only be used within the first collection expression. P744 
 
 
 # Difference
