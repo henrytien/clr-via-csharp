@@ -8,13 +8,13 @@ When you learn CSharp language, here are many you should care performance tips. 
 
 ## Improving performance
 
-1. **Unsafe** code is allowed to work directly with memory addresses and can manipulate bytes at these addresses. This is a very power- ful feature and is typically useful when interoperating with unmanaged code or when you want to improve the performance of a time-critical algorithm. p17
+1. `Unsafe` code is allowed to work directly with memory addresses and can manipulate bytes at these addresses. This is a very powerful feature and is typically useful when interoperating with unmanaged code or when you want to improve the performance of a time-critical algorithm. p17
 
-2. The CLR’s JIT compiler does not have to compile the IL code at run time, and this can improve the applica- tion’s performance. 
+2. The CLR’s JIT compiler does not have to compile the IL code at run time, and this can improve the application’s performance. 
 
 3. For some applications, the reduction in working set size improves performance, so using NGen can be a net win. P21 
 
-4. Because this programming paradigm is quite com- mon, C# offers a way to simplify this code and improve its performance by providing an as operator. P96
+4. Because this programming paradigm is quite common, C# offers a way to simplify this code and improve its performance by providing an as operator. P96
 
    ```c#
    Employee e = o as Employee; 
@@ -47,8 +47,8 @@ When you learn CSharp language, here are many you should care performance tips. 
 
 8. The generic collection classes offer many improvements over the non-generic equivalents. 
 
-   - One of the biggest improve- ments is that the generic collection classes allow you to work with collections of value types without requiring that items in the collection be boxed/unboxed. 
-   - This in itself greatly im- proves performance because far fewer objects will be created on the managed heap, there- by reducing the number of garbage collections required by your application.
+   - One of the biggest improvements is that the generic collection classes allow you to work with collections of value types without requiring that items in the collection be boxed/unboxed. 
+   - This in itself greatly improves performance because far fewer objects will be created on the managed heap, thereby reducing the number of garbage collections required by your application.
    - You will get compile-time type safety, and your source code will be cleaner due to fewer casts. 
 
 9. If the `this` and obj arguments refer to the same object, return true. This step can improve performance when comparing objects with many fields. P139
@@ -57,9 +57,9 @@ When you learn CSharp language, here are many you should care performance tips. 
 
 11. Many compilers will never emit code to call a value type’s default constructor automatically, even if the value type offers a parameterless constructor. P186
 
-12. To improve performance and also to avoid considering an extension method that you may not want, the C# compiler requires that you “import” extension meth- ods. P201
+12. To improve performance and also to avoid considering an extension method that you may not want, the C# compiler requires that you “import” extension methods. P201
 
-13. Be aware that calling a method that takes a variable number of arguments in- curs an additional performance hit unless you explicitly pass null. 
+13. Be aware that calling a method that takes a variable number of arguments incurs an additional performance hit unless you explicitly pass null. 
 
 14. Because a generic algorithm can now be created to work with a specific value type, the instances of the value type can be passed by value, and the CLR no longer has to do any boxing. 
 
@@ -69,7 +69,7 @@ When you learn CSharp language, here are many you should care performance tips. 
 
 17. You might want to consider using an array of arrays (a jagged array) instead of a rectangular array.P386
 
-18. The stack-allocated memory (array) will automatically be freed when the method returns; this is where we get the performance improve- ment. P388
+18. The stack-allocated memory (array) will automatically be freed when the method returns; this is where we get the performance improvement. P388
 
 19. The managed heap allocates these objects next to each other in memory, you get excellent performance when accessing these objects due to locality of reference. P507 
 
@@ -79,27 +79,25 @@ When you learn CSharp language, here are many you should care performance tips. 
 
 22. When the program needs the data, the program checks the weak reference to see if the object that contains the data is still around, and if it is, the program just uses it; the program experiences high performance. P550 
 
-23. Invoking a member by using reflection will also hurt performance. P590 
+23. In order to have good performance and compile-time type safety, you want to avoid using reflection as much as possible.  P599 
 
-24. In order to have good performance and compile-time type safety, you want to avoid using reflection as much as possible.  P599 
+24. The field contains information that is easily calculated. In this case, you select which fields do not need to be serialized, thus improving your application’s performance by reducing the amount of data transferred. P620 
 
-25. The field contains information that is easily calculated. In this case, you select which fields do not need to be serialized, thus improving your application’s performance by reducing the amount of data transferred. P620 
+25. This improves performance significantly, and avoiding context switches is something you want to achieve as often as possible when you design your code. P673 
 
-26. This improves performance significantly, and avoiding context switches is something you want to achieve as often as possible when you design your code. P673 
+26. There are some common programming scenarios that can potentially benefit from the improved performance possible with `tasks`. P713 
 
-27. There are some common programming scenarios that can potentially benefit from the improved performance possible with tasks. P713 
+27. You can potentially improve the performance of this processing by using Parallel LINQ. P717 
 
-28. You can potentially improve the performance of this processing by using Parallel LINQ. P717 
+28. One of the truly great features of performing asynchronous I/O operations is that you can initiate many of them concurrently so that they are all executing in parallel. This can give your application a phenomenal performance boost. P746 
 
-29. One of the truly great features of performing asynchronous I/O operations is that you can initiate many of them concurrently so that they are all executing in parallel. This can give your application a phenomenal performance boost. P746 
+29. Hybrid constructs provide the performance benefit of the primitive user-mode constructs when there is no thread contention. P789 
 
-30. Hybrid constructs provide the performance benefit of the primitive user-mode constructs when there is no thread contention. P789 
+30. To get great performance, the `lock` tries to use the Int32 and avoid using the `AutoResetEvent` as much as possible.  P790 
 
-31. To get great performance, the lock tries to use the Int32 and avoid using the AutoResetEvent as much as possible.  P790 
+31. The FCL ships with many hybrid constructs that use fancy logic to keep your threads in user mode, improving your application’s performance. P793 
 
-32. The FCL ships with many hybrid constructs that use fancy logic to keep your threads in user mode, improving your application’s performance. P793 
-
-33. For the no­contention case to improve performance and reduce memory consumption. P816 
+32. For the no­contention case to improve performance and reduce memory consumption. P816 
 
 ## Hurt perfomance
 
@@ -111,22 +109,23 @@ When you learn CSharp language, here are many you should care performance tips. 
 5. The CLR would have to verify at each write that the write was not occurring to a constant object, and this would hurt performance significantly. P225
 6. You do need to realize that the CLR generates native code for each method the first time the method is called for a particular data type. This will increase an application’s working set size, which will hurt performance. P270 
 7. If you perform a lot of string manipulations, you end up creating a lot of String objects on the heap, which causes more frequent garbage collections, thus hurting your application’s performance. P323 
-8. Checking strings for equality is a common operation for many ap- plications—this task can hurt performance significantly. It is good way use  function `Object.ReferenceEquals`P329 
+8. Checking strings for equality is a common operation for many applications—this task can hurt performance significantly. It is good way use  function `Object.ReferenceEquals`P329 
 9. Dynamically growing the array hurts performance; avoid this by setting a good initial capacity. P337
-10. If you construct ASCIIEncoding objects yourself, you are creating more objects on the heap, which hurts your application’s performance.P353
+10. If you construct `ASCIIEncoding` objects yourself, you are creating more objects on the heap, which hurts your application’s performance.P353
 11. Allocating short-lived large objects will cause generation 2 to be col- lected more frequently, hurting performance. P520 
-12. A performance hit occurs when Windows context switches to another thread. P673
-13. if you have more threads than CPUs, then context switching is introduced and performance dete- riorates. P674 
-14. Calling Wait or querying a task’s Result property when the task has not yet finished running will most likely cause the thread pool to create a new thread, which increases resource usage and hurts performance. P705 
-15. Thread synchronization would hurt performance, not requiring thread synchronization is good. P716 
-16. This thread synchronization lock can become a bottleneck in some applications, thereby limiting scalability and performance to some degree. P724 
-17. Tasks are stolen from the tail of a local queue and require that a thread synchronization lock be taken, which hurts performance a little bit. P725
-18. Locks is that they hurt performance. P756 
-19. Having threads transition from user mode to kernel mode and back incurs a big performance hit, which is why kernel-mode constructs should be avoided. P761 
-20. Each method call on a kernel object causes the calling thread to transition from managed code to native user-mode code to native kernel-mode code and then return all the way back. These transitions require a lot of CPU time and, if performed frequently, can adversely affect the overall performance of your application. P778 
-21. Calling WaitOne causes the thread to transition into the Windows’ kernel, and this is a big performance hit.  P791 
-22. Entering and leaving a try block decreases the performance of the method. P799 
-23. Avoid using recursive locks (especially recursive reader-writer locks) because they hurt performance. P806 
+12. Invoking a member by using reflection will also hurt performance. P590 
+13. A performance hit occurs when Windows context switches to another thread. P673
+14. if you have more threads than CPUs, then context switching is introduced and performance dete- riorates. P674 
+15. Calling `Wait` or querying a task’s Result property when the task has not yet finished running will most likely cause the thread pool to create a new thread, which increases resource usage and hurts performance. P705 
+16. Thread synchronization would hurt performance, not requiring thread synchronization is good. P716 
+17. This thread synchronization lock can become a bottleneck in some applications, thereby limiting scalability and performance to some degree. P724 
+18. Tasks are stolen from the tail of a local queue and require that a thread synchronization lock be taken, which hurts performance a little bit. P725
+19. `Locks` is that they hurt performance. P756 
+20. Having threads transition from user mode to kernel mode and back incurs a big performance hit, which is why kernel-mode constructs should be avoided. P761 
+21. Each method call on a kernel object causes the calling thread to transition from managed code to native user-mode code to native kernel-mode code and then return all the way back. These transitions require a lot of CPU time and, if performed frequently, can adversely affect the overall performance of your application. P778 
+22. Calling `WaitOne` causes the thread to transition into the Windows’ kernel, and this is a big performance hit.  P791 
+23. Entering and leaving a `try` block decreases the performance of the method. P799 
+24. Avoid using recursive locks (especially recursive reader-writer locks) because they hurt performance. P806 
 
 # Recommend
 
