@@ -11,6 +11,8 @@
   - [Declare a type as a value type](#declare-a-type-as-a-value-type)
 - [Benefit](#benefit)
   - [Why use generics](#why-use-generics)
+- [Restrictions](#restrictions)
+  - [Async functions](#async-functions)
 - [Difference](#difference)
   - [Value types and reference types](#value-types-and-reference-types)
   - [Sealed class vs unsealed class](#sealed-class-vs-unsealed-class)
