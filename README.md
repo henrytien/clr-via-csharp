@@ -281,10 +281,14 @@ The easiest way to access the System Monitor control is to run PerfMon.exe.
 27. **What are Regular expressions? Search a string using regular expressions?**
 28. **What are the basic string Operations?**
 29. **What is Parsing? How to Parse a Date Time String?**
+30. **Can we use "this" command within a static method?**
+31. **What is difference between constaints and read-only? **
+32. 
 
 ## Advanced Concepts
 
-30. **What is a Delegate?**
+1. **What is a Delegate?**
+
 31. **What are Events?**
 32. **How to use Delegates with Events?**
 33. **What are the different types of Delegates?**
