@@ -12,7 +12,7 @@
 10. **What is "using" statement in C#? **
 11. **Explain Abstraction.**
 12. **Explain Polymorphism?**
-13. **How is Exception Handing implemented in C#? **
+13. **How is Exception Handing implemented in C#? ** 
 14. **What are C# I/O Classes? What are the common used I/O classes?**
 15. **What is StreamReader/StreamWriter classes?**
 16. **What is a Destructor in C#?**
