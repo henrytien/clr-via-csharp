@@ -9,10 +9,10 @@
 7. **What are the differences between a Class and Struct?**
 8. **What is the difference between the Virtual method and Abstract method?**
 9. **Explain Namespaces in C#.**
-10. **What is "using" statement in C#? **
-11. **Explain Abstraction.**
+10. **What is "using" statement in C#?**
+11. **Explain Abstraction.** 
 12. **Explain Polymorphism?**
-13. **How is Exception Handing implemented in C#? ** 
+13. **How is Exception Handing implemented in C#?**  
 14. **What are C# I/O Classes? What are the common used I/O classes?**
 15. **What is StreamReader/StreamWriter classes?**
 16. **What is a Destructor in C#?**
@@ -24,7 +24,7 @@
 22. **What is a Jagged Array?**
 23. **Name some properties of Array.**
 24. **What is an Array Class?**
-25. **What is a String? What are the properties of a String Class? **
+25. **What is a String? What are the properties of a String Class?** 
 26. **What is an Escape Sequence? Name some String escape sequences in C#**
 27. **What are Regular expressions? Search a string using regular expressions?**
 28. **What are the basic string Operations?**
