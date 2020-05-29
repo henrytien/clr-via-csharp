@@ -47,5 +47,9 @@
 42. **What a the different states of a Thread?**
 43. **What a Async and Await?**
 44. **What is a Deadlock?**
-45. 
+45. **Explain Locks, Monitors, and Mutex Object in Threading.**
+46. **What is Race Condition?**
+47. **What is Thread Pooling?**
+48. **What is Serialization?**
+49. **What are the types of Serialization?** 
 
