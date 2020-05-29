@@ -1,5 +1,31 @@
 # CLR.via.Csharp
+<!-- TOC -->
 
+- [CLR.via.Csharp](#clrviacsharp)
+- [Performance](#performance)
+  - [Improving performance](#improving-performance)
+  - [Hurt perfomance](#hurt-perfomance)
+- [Recommend](#recommend)
+- [Rules and Guidelines](#rules-and-guidelines)
+  - [Define my own classes](#define-my-own-classes)
+  - [Declare a type as a value type](#declare-a-type-as-a-value-type)
+- [Benefit](#benefit)
+  - [Why use generics](#why-use-generics)
+- [Difference](#difference)
+  - [Value types and reference types](#value-types-and-reference-types)
+  - [Sealed class vs unsealed class](#sealed-class-vs-unsealed-class)
+- [Tools](#tools)
+  - [NGen.exe](#ngenexe)
+  - [ILDasm.exe](#ildasmexe)
+  - [FxCopCmd.exe](#fxcopcmdexe)
+  - [PerfMon.exe](#perfmonexe)
+  - [PerfViwe](#perfviwe)
+- [FAQ](#faq)
+  - [Basic Concepts](#basic-concepts)
+  - [Advanced Concepts](#advanced-concepts)
+- [Reference](#reference)
+
+<!-- /TOC -->
 
 
 # Performance
