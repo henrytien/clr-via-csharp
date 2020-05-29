@@ -4,7 +4,7 @@
 
 # Performance
 
-When you learn CSharp language, here are many you should care performance tips. This is a note that helps you have good performance and hurting performance.
+When you learn CSharp language, here are many you should care performance tips. This is a note that helps your code have good performance and avoid hurting performance.
 
 ## Improving performance
 
