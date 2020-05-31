@@ -283,7 +283,6 @@ The easiest way to access the System Monitor control is to run PerfMon.exe.
 29. **What is Parsing? How to Parse a Date Time String?**
 30. **Can we use "this" command within a static method?**
 31. **What is difference between constaints and read-only? **
-32. 
 
 ## Advanced Concepts
 
@@ -317,7 +316,9 @@ The easiest way to access the System Monitor control is to run PerfMon.exe.
 
   A collection of awesome .NET libraries, tools, frameworks, and software.
 
-- 
+- [C# documentation](https://docs.microsoft.com/en-us/dotnet/csharp/)
+
+  Learn how to write any application using the C# programming language on the .NET platform.
 
 
 
