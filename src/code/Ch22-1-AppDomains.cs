@@ -54,6 +54,7 @@ public sealed class Program {
       //mbrt.SomeMethod();
 
       // Unload the new AppDomain
+      //AppDomain.Unload(ad2);
       // mbrt refers to a valid proxy object; the proxy object refers to an invalid AppDomain
 
       try {
