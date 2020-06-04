@@ -51,10 +51,9 @@ public sealed class Program {
       // This looks like we're calling a method on MarshalByRefType but, we're not.
       // We're calling a method on the proxy type. The proxy transitions the thread
       // to the AppDomain owning the object and calls this method on the real object.
-      mbrt.SomeMethod();
+      //mbrt.SomeMethod();
 
       // Unload the new AppDomain
-      AppDomain.Unload(ad2);
       // mbrt refers to a valid proxy object; the proxy object refers to an invalid AppDomain
 
       try {
@@ -83,6 +82,7 @@ public sealed class Program {
       MarshalByValType mbvt = mbrt.MethodWithReturn();
 
       // Prove that we did NOT get a reference to a proxy object
+      // Becouse a copy of the returned object.
       Console.WriteLine("Is proxy={0}", RemotingServices.IsTransparentProxy(mbvt));
 
       // This looks like we're calling a method on MarshalByValType and we are.
@@ -114,7 +114,7 @@ public sealed class Program {
          ad2.CreateInstanceAndUnwrap(exeAssembly, "MarshalByRefType");
 
       // The object's method returns an non-marshalable object; exception
-      NonMarshalableType nmt = mbrt.MethodArgAndReturn(callingDomainName);
+      //NonMarshalableType nmt = mbrt.MethodArgAndReturn(callingDomainName);
       // We won't get here...
    }
 
