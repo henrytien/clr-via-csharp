@@ -8,8 +8,8 @@ using System.Threading;
 
 public sealed class Program {
    public static void Main() {
-        Marshalling();
-        FieldAccessTiming();
+        //Marshalling();
+        //FieldAccessTiming();
       AppDomainResourceMonitoring();
       UnloadTimeout.Go();
    }
@@ -261,6 +261,7 @@ public sealed class MarshalByRefType : MarshalByRefObject {
 
 
 // Instances can be marshaled-by-value across AppDomain boundaries
+// Serializeable
 [Serializable]
 public sealed class MarshalByValType : Object {
    private DateTime m_creationTime = DateTime.Now; // NOTE: DateTime is [Serializable]
