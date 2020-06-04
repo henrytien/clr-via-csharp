@@ -1,5 +1,5 @@
 # Auto detect text files and perform LF normalization
 * text=auto
-/src/code/bin
-/src/code/obj
-/src/code/.vs
+/src/code/bin/*
+/src/code/obj/*
+/src/code/.vs/*
