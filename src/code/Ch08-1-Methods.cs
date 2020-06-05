@@ -91,9 +91,9 @@ public sealed class Program {
         //TypeConstructorPerformance.Go();
         //ConversionOperator.Go();
         //ExtensionMethods.Go();
-
-        HenryTien henry = new HenryTien(520);
-        henry.Hello();
+        PartialMethodsDemo.Go();
+        //HenryTien henry = new HenryTien(520);
+        //henry.Hello();
     }
 }
 
@@ -233,6 +233,7 @@ internal sealed class ConversionOperator {
 }
 
 #region Extension Method Demo
+// Static 
 internal static class StringBuilderExtensions {
     public static Int32 IndexOf(this StringBuilder sb, Char value) {
         for (Int32 index = 0; index < sb.Length; index++)
@@ -324,9 +325,9 @@ internal  class HenryTien : Henry
     }
     private Int32 id;
 }
-
+// Partial demo
 internal static class PartialMethodsDemo {
-    private static class Inheritance {
+    private static class Inheritance { 
         // Tool-produced code in some source code file:
         internal class Base {
             private String m_name;
