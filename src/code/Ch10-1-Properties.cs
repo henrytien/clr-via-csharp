@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public static class Program {
     public static void Main() {
-        ParameterlessProperties.Go();
+        //ParameterlessProperties.Go();
         AnonymousTypesAndTuples.Go();
         BitArrayTest();
     }
@@ -68,7 +68,7 @@ internal static class AnonymousTypesAndTuples {
         TupleTypes();
         Expando();
     }
-
+    //Anonymous Types
     private static void AnonymousTypes() {
         // Define a type, construct an instance of it, & initialize its properties
         var o1 = new { Name = "Jeff", Year = 1964 };
@@ -135,7 +135,7 @@ internal static class AnonymousTypesAndTuples {
     private static void Expando() {
         dynamic e = new System.Dynamic.ExpandoObject();
         e.x = 6;	// Add an Int32 'x' property whose value is 6
-        e.y = "Jeff";	// Add a String 'y' property whose value is “Jeff”
+        e.y = "Jeff";	// Add a String 'y' property whose value is ?Jeff?
         e.z = null;	// Add an Object 'z' property whose value is null
 
         // See all the properties and their values:
@@ -172,7 +172,7 @@ internal sealed class BitArray {
 
     // This is the indexer.
     public Boolean this[Int32 bitPos] {
-        // This is the index property’s get accessor method.
+        // This is the index property?s get accessor method.
         get {
             // Validate arguments first
             if ((bitPos < 0) || (bitPos >= m_numBits))
@@ -182,7 +182,7 @@ internal sealed class BitArray {
             return ((m_byteArray[bitPos / 8] & (1 << (bitPos % 8))) != 0);
         }
 
-        // This is the index property’s set accessor method.
+        // This is the index property?s set accessor method.
         set {
             if ((bitPos < 0) || (bitPos >= m_numBits))
                 throw new ArgumentOutOfRangeException("bitPos", "bitPos must be between 0 and " + m_numBits);
