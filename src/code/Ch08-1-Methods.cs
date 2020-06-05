@@ -386,7 +386,7 @@ internal static class PartialMethodsDemo {
 
     public partial class HenryPartial
     {
-        partial void OnSomethingHappened(string s);
+        partial  void OnSomethingHappened(ref string s);
     }
 
     // This part can be in a separate file.
@@ -394,13 +394,13 @@ internal static class PartialMethodsDemo {
     {
         // Comment out this method and the program
         // will still compile.
-        partial  void OnSomethingHappened(String s)
+        partial void OnSomethingHappened(ref String s)
         {
             Console.WriteLine("Something happened: {0}", s);
         }
         public void Something(String s)
         {
-            OnSomethingHappened(s);
+            OnSomethingHappened(ref s);
         }
     }
 
