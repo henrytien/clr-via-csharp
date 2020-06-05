@@ -24,7 +24,7 @@ internal static class ImplementingAnInterface {
          new Point(3, 3),
          new Point(1, 2),
       };
-
+        
       if (points[0].CompareTo(points[1]) > 0) {
          Point tempPoint = points[0];
          points[0] = points[1];
@@ -35,8 +35,20 @@ internal static class ImplementingAnInterface {
          Console.WriteLine(p);
    }
 
-   // Point is derived from System.Object and implements IComparable<T>.
-   public sealed class Point : IComparable<Point> {
+    public sealed class PointA
+    {
+        private Int32 m_x, m_y, m_z;
+
+        public PointA(Int32 x, Int32 y, Int32 z)
+        {
+            m_x = x;
+            m_y = y;
+            m_z = z;
+        }
+    }
+
+        // Point is derived from System.Object and implements IComparable<T>.
+        public sealed class Point : IComparable<Point> {
       private Int32 m_x, m_y;
 
       public Point(Int32 x, Int32 y) {
@@ -85,6 +97,7 @@ internal static class InterfaceReimplementation {
       b.Dispose();
 
       // Call's Dispose by using b's object's type: "Derived's Dispose"
+      // Derived's Dispose
       ((IDisposable)b).Dispose();
    }
 
