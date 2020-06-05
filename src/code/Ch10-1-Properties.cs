@@ -6,10 +6,11 @@ using System.Collections.Generic;
 public static class Program {
     public static void Main() {
         //ParameterlessProperties.Go();
-        AnonymousTypesAndTuples.Go();
+        //AnonymousTypesAndTuples.Go();
         BitArrayTest();
     }
 
+    // BitArray
     private static void BitArrayTest() {
         // Allocate a BitArray that can hold 14 bits.
         BitArray ba = new BitArray(14);
