@@ -70,14 +70,14 @@ internal class MailManager {
       Pager pager = new Pager(mm);
 
       // Simulate an incoming mail message
-      mm.SimulateNewMail("Jeffrey", "Kristin", "I Love You!");
+      mm.SimulateNewMail("Henry", "Mj", "I Love You!");
 
       // Force the Fax object to unregister itself with the MailManager
       fax.Unregister(mm);
 
-      // Simulate an incoming mail message
-      mm.SimulateNewMail("Jeffrey", "Mom & Dad", "Happy Birthday.");
-   }
+        // Simulate an incoming mail message
+        mm.SimulateNewMail("Henry", "Mj", "Happy Birthday.");
+    }
 
 #if CompilerImplementedEventMethods
    // Step #2: Define the event member 
