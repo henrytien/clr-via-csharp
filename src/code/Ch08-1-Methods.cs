@@ -297,14 +297,20 @@ internal static class ExtensionMethods {
 }
 #endregion
 
-  internal abstract class Henry
+internal abstract class Henry
 {
-    protected Henry(Int32 id) { this.id = id; }
-    public  virtual void  Hello() { }
-    Int32 id;
-
-
+    protected Henry(Int32 id) { Henry.id = id; }
+    public virtual void Hello() { }
+    static Int32 id;
 }
+
+// Can't inheritance
+//internal static class Henry
+//{
+//    static Henry() { Henry.id = 0; }
+//    public static  void Hello() { }
+//    static Int32 id;
+//}
 
 internal  class HenryTien : Henry
 {
@@ -312,7 +318,7 @@ internal  class HenryTien : Henry
     {
         this.id = Id;
     }
-     public override void Hello()
+     public sealed override void Hello()
     {
         Console.WriteLine("HenryTien Hello {0}",id);
     }
