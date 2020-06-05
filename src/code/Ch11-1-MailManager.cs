@@ -48,7 +48,7 @@ public static class Events {
 internal sealed class NewMailEventArgs : EventArgs {
 
    private readonly String m_from, m_to, m_subject;
-
+   // Constructor 
    public NewMailEventArgs(String from, String to, String subject) {
       m_from = from; m_to = to; m_subject = subject;
    }
