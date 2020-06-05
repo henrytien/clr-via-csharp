@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 public static class Program {
     public static void Main() {
-        //ParameterlessProperties.Go();
+        ParameterlessProperties.Go();
         //AnonymousTypesAndTuples.Go();
-        BitArrayTest();
+        //BitArrayTest();
     }
 
     // BitArray
@@ -30,28 +30,38 @@ public static class Program {
 internal static class ParameterlessProperties {
     public static void Go() {
         Employee emp = new Employee();
-        emp.Name = "Jeffrey Richter";
-        emp.Age = 45;	   // Updates the age
-        Console.WriteLine("Employee info: Name = {0}, Age = {1}", emp.Name, emp.Age);
+        emp.FirstName = "Henry";
+        emp.Age = 25;	   // Updates the age
+        emp.LastName = "Tine";
+        Console.WriteLine("Employee info: FirstName = {0}, LastName={1}, " +
+            "Age = {2}", emp.FirstName, emp.LastName, emp.Age);
 
         try {
-            emp.Age = -5;	   // Throws an exception
+            //emp.Age = -5;	   // Throws an exception
         }
         catch (ArgumentOutOfRangeException e) {
             Console.WriteLine(e);
         }
-        Console.WriteLine("Employee info: Name = {0}, Age = {1}", emp.Name, emp.Age);
+        Console.WriteLine("Employee info: FirstName = {0}, LastName={1}, " +
+            "Age = {2}", emp.FirstName, emp.LastName, emp.Age);
     }
 
     private sealed class Employee {
-        private String m_Name; // prepended 'm_' to avoid conflict
+        private String m_FirstName; // prepended 'm_' to avoid conflict
         private Int32 m_Age;  // prepended 'm_' to avoid conflict
+        private String m_LastName; //prepended 'm_' to avoid conflict
 
-        public String Name {
-            get { return (m_Name); }
-            set { m_Name = value; } // 'value' identifies new value
+        public String FirstName
+        {
+            get { return (m_FirstName); }
+            set { m_FirstName = value; } // 'value' identifies new value
         }
 
+        public String LastName
+        {
+            get { return (m_LastName); }
+            set { m_LastName = value; }
+        }
         public Int32 Age {
             get { return (m_Age); }
             set {
