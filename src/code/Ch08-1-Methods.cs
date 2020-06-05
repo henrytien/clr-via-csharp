@@ -87,10 +87,13 @@ public sealed class Program {
         a[0].m_x = 123;
         Console.WriteLine(a[0].m_x);	// Displays 123
 
-        new FieldInitializationInCtor("Test");
-        TypeConstructorPerformance.Go();
-        ConversionOperator.Go();
-        ExtensionMethods.Go();
+        //new FieldInitializationInCtor("Test");
+        //TypeConstructorPerformance.Go();
+        //ConversionOperator.Go();
+        //ExtensionMethods.Go();
+
+        HenryTien henry = new HenryTien(520);
+        henry.Hello();
     }
 }
 
@@ -293,6 +296,28 @@ internal static class ExtensionMethods {
     }
 }
 #endregion
+
+  internal abstract class Henry
+{
+    protected Henry(Int32 id) { this.id = id; }
+    public  virtual void  Hello() { }
+    Int32 id;
+
+
+}
+
+internal  class HenryTien : Henry
+{
+    public HenryTien(int Id) : base(Id)
+    {
+        this.id = Id;
+    }
+     public override void Hello()
+    {
+        Console.WriteLine("HenryTien Hello {0}",id);
+    }
+    private Int32 id;
+}
 
 internal static class PartialMethodsDemo {
     private static class Inheritance {
