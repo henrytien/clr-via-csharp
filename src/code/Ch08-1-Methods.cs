@@ -242,7 +242,7 @@ internal static class StringBuilderExtensions {
 internal static class ExtensionMethods {
     public static void Go() {
         {
-            var sb = new StringBuilder("Hello. My name is Jeff.");	  // The initial string
+            var sb = new StringBuilder("Hello. My name is Henry.");	  // The initial string
 
             // Change period to exclamation mark and get # characters in 1st sentence (5).
             Int32 index = StringBuilderExtensions.IndexOf(sb.Replace('.', '!'), '!');
@@ -254,17 +254,17 @@ internal static class ExtensionMethods {
             index = sb.Replace('.', '!').IndexOf('!');
         }
 
-        {
-            // sb is null
-            StringBuilder sb = null;
+        //{
+        //    // sb is null
+        //    StringBuilder sb = null;
 
-            // Calling extension method: NullReferenceException will NOT be thrown when calling IndexOf
-            // NullReferenceException will be thrown inside IndexOf’s for loop
-            sb.IndexOf('X');
+        //    // Calling extension method: NullReferenceException will NOT be thrown when calling IndexOf
+        //    // NullReferenceException will be thrown inside IndexOf’s for loop
+        //    sb.IndexOf('X');
 
-            // Calling instance method: NullReferenceException WILL be thrown when calling Replace
-            sb.Replace('.', '!');
-        }
+        //    // Calling instance method: NullReferenceException WILL be thrown when calling Replace
+        //    sb.Replace('.', '!');
+        //}
         SomeMethod();
     }
 
@@ -280,11 +280,12 @@ internal static class ExtensionMethods {
 
         // Create an Action delegate that refers to the static ShowItems extension method
         // and has the first argument initialized to reference the “Jeff” string. 
-        Action a = "Jeff".ShowItems;
+        Action a = "Henry".ShowItems;
         // Invoke the delegate which calls ShowItems passing it a reference to the “Jeff” string.
         a();
     }
 
+    // Extention method
     private static void ShowItems<T>(this IEnumerable<T> collection) {
         foreach (var item in collection)
             Console.WriteLine(item);
