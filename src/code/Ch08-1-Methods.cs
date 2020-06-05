@@ -384,13 +384,13 @@ internal static class PartialMethodsDemo {
         }
     }
 
-    public partial class A
+    public partial class HenryPartial
     {
         partial void OnSomethingHappened(string s);
     }
 
     // This part can be in a separate file.
-    public partial class A
+    public partial class HenryPartial
     {
         // Comment out this method and the program
         // will still compile.
@@ -411,7 +411,7 @@ internal static class PartialMethodsDemo {
         var partialMethods = new PartialMethods.Base();
         partialMethods.Name = "Jeff";
 
-        A part = new A();
+        HenryPartial part = new HenryPartial();
         part.Something("mj, I love you.");
     }
 }
