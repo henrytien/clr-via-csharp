@@ -384,11 +384,34 @@ internal static class PartialMethodsDemo {
         }
     }
 
+    public partial class A
+    {
+        partial void OnSomethingHappened(string s);
+    }
+
+    // This part can be in a separate file.
+    public partial class A
+    {
+        // Comment out this method and the program
+        // will still compile.
+        partial  void OnSomethingHappened(String s)
+        {
+            Console.WriteLine("Something happened: {0}", s);
+        }
+        public void Something(String s)
+        {
+            OnSomethingHappened(s);
+        }
+    }
+
     public static void Go() {
         var inheritance = new Inheritance.Derived();
         inheritance.Name = "Jeff";
 
         var partialMethods = new PartialMethods.Base();
         partialMethods.Name = "Jeff";
+
+        A part = new A();
+        part.Something("mj, I love you.");
     }
 }
