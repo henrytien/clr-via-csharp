@@ -28,7 +28,7 @@ public static class IOOps {
       TaskLogger.Go().Wait();
       EventAwaiterDemo.Go();
       Features.Go();
-      GuiDeadlockWindow.Go();
+      //GuiDeadlockWindow.Go();
       Cancellation.Go().Wait();
       ThreadIO.Go();
       var s = AwaitWebClient(new Uri("http://Wintellect.com/")).Result;
@@ -550,7 +550,7 @@ internal static class Features {
    [MethodImpl(MethodImplOptions.AggressiveInlining)]  // Causes compiler to optimize the call away
    public static void NoWarning(this Task task) { }
 }
-
+/*
 internal sealed class GuiDeadlockWindow : Window {
    public static void Go() {
       // This is a WPF example
@@ -565,7 +565,7 @@ internal sealed class GuiDeadlockWindow : Window {
 
       base.OnActivated(e);
    }
-
+    
    private async Task<String> GetHttp1() {
       // Issue the HTTP request and let the thread return from GetHttp
       HttpResponseMessage msg = await new HttpClient().GetAsync("http://Wintellect.com/");
@@ -594,6 +594,7 @@ internal sealed class GuiDeadlockWindow : Window {
       });
    }
 }
+*/
 
 internal static class Cancellation {
    public static async Task Go() {
