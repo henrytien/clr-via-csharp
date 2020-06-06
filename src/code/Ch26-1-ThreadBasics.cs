@@ -3,10 +3,10 @@ using System.Threading;
 
 public static class ThreadBasics {
    public static void Main() {
-      FirstThread.Go();
-      BackgroundDemo.Go(true);
-      BackgroundDemo.Go(false);
-   }
+        //FirstThread.Go();
+        //BackgroundDemo.Go(true);
+        BackgroundDemo.Go(false);
+    }
 }
 
 internal static class FirstThread {
@@ -47,7 +47,7 @@ internal static class BackgroundDemo {
    }
 
    private static void ThreadMethod() {
-      Thread.Sleep(10000); // Simulate 10 seconds of work
+      Thread.Sleep(2000); // Simulate 2 seconds of work
       Console.WriteLine("ThreadMethod is exiting");
    }
 }
