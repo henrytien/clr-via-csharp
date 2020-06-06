@@ -367,8 +367,8 @@ internal static class TaskDemo {
    }
 
    private static void SynchronizationContextTaskScheduler() {
-      var f = new MyForm();
-      System.Windows.Forms.Application.Run();
+     // var f = new MyForm();
+     //System.Windows.Forms.Application.Run();
    }
 
    private static void ComputeBoundOp(Object state) { }
@@ -392,7 +392,7 @@ internal static class TaskDemo {
       }
       return sum;
    }
-
+/*    
    private sealed class MyForm : System.Windows.Forms.Form {
       private readonly TaskScheduler m_syncContextTaskScheduler;
       public MyForm() {
@@ -432,7 +432,7 @@ internal static class TaskDemo {
          base.OnMouseClick(e);
       }
    }
-
+*/
    private sealed class ThreadPerTaskScheduler : TaskScheduler {
       protected override IEnumerable<Task> GetScheduledTasks() { return Enumerable.Empty<Task>(); }
       protected override void QueueTask(Task task) {
