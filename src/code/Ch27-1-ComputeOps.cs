@@ -18,7 +18,7 @@ public static class ComputeOps {
       //ThreadPoolDemo.Go();
       //ExecutionContexts.Go();
       //CancellationDemo.Go();
-      TaskDemo.Go();
+      //TaskDemo.Go();
       ParallelDemo.Go();
       ParallelLinq.Go();
       TimerDemo.Go();
@@ -572,7 +572,7 @@ internal static class TimerDemo {
       // to the pool and waits for another work item
    }
 }
-
+// Static class of DelayDemo
 internal static class DelayDemo {
    public static void Go() {
       Console.WriteLine("Checking status every 2 seconds");
