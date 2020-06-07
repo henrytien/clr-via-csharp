@@ -24,14 +24,14 @@ public static class IOOps {
    [STAThread]
    public static void Main() {
       PipeDemo.Go().Wait();
-      AsyncFuncCodeTransformation.Go();
-      TaskLogger.Go().Wait();
-      EventAwaiterDemo.Go();
-      Features.Go();
+      //AsyncFuncCodeTransformation.Go();
+      //TaskLogger.Go().Wait();
+      //EventAwaiterDemo.Go();
+      //Features.Go();
       //GuiDeadlockWindow.Go();
-      Cancellation.Go().Wait();
-      ThreadIO.Go();
-      var s = AwaitWebClient(new Uri("http://Wintellect.com/")).Result;
+      //Cancellation.Go().Wait();
+      //ThreadIO.Go();
+      //var s = AwaitWebClient(new Uri("http://Wintellect.com/")).Result;
    }
 
    private static async Task<String> AwaitWebClient(Uri uri) {
@@ -198,13 +198,13 @@ internal static class PipeDemo {
          await pipe.WriteAsync(data, 0, data.Length);
       } // Close the pipe to the client
    }
-
+   // Client issue a request way of async.
    private static async Task<String> IssueClientRequestAsync(String serverName, String message) {
       using (var pipe = new NamedPipeClientStream(serverName, "PipeName", PipeDirection.InOut,
          PipeOptions.Asynchronous | PipeOptions.WriteThrough)) {
 
          pipe.Connect(); // Must Connect before setting ReadMode
-         pipe.ReadMode = PipeTransmissionMode.Message;
+         //pipe.ReadMode = PipeTransmissionMode.Message;
 
          // Asynchronously send data to the server
          Byte[] request = Encoding.UTF8.GetBytes(message);
