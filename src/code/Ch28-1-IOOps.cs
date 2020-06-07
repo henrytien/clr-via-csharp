@@ -23,16 +23,16 @@ using Microsoft.Win32.SafeHandles;
 public static class IOOps {
    [STAThread]
    public static void Main() {
-      PipeDemo.Go().Wait();
-      //AsyncFuncCodeTransformation.Go();
-      //TaskLogger.Go().Wait();
-      //EventAwaiterDemo.Go();
-      //Features.Go();
-      //GuiDeadlockWindow.Go();
-      //Cancellation.Go().Wait();
-      //ThreadIO.Go();
-      //var s = AwaitWebClient(new Uri("http://Wintellect.com/")).Result;
-   }
+        //PipeDemo.Go().Wait();
+        AsyncFuncCodeTransformation.Go();
+        //TaskLogger.Go().Wait();
+        //EventAwaiterDemo.Go();
+        //Features.Go();
+        //GuiDeadlockWindow.Go();
+        //Cancellation.Go().Wait();
+        //ThreadIO.Go();
+        //var s = AwaitWebClient(new Uri("http://Wintellect.com/")).Result;
+    }
 
    private static async Task<String> AwaitWebClient(Uri uri) {
       // The System.Net.WebClient class supports the Event-based Asynchronous Pattern
@@ -221,6 +221,7 @@ internal static class PipeDemo {
 internal static class AsyncFuncCodeTransformation {
    public static void Go() {
       //var s = MyMethodAsync(5).Result;
+      //"Done"
       var s = MyMethodAsync_ActualImplementation(5).Result;
    }
 
@@ -261,6 +262,7 @@ internal static class AsyncFuncCodeTransformation {
       };
 
       // Start executing the state machine
+      // {AsyncFuncCodeTransformation.StateMachine}
       stateMachine.m_builder.Start(ref stateMachine);
       return stateMachine.m_builder.Task; // Return state machine's Task
    }
