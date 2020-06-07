@@ -24,14 +24,14 @@ public static class IOOps {
    [STAThread]
    public static void Main() {
         //PipeDemo.Go().Wait();
-        AsyncFuncCodeTransformation.Go();
+        //AsyncFuncCodeTransformation.Go();
         //TaskLogger.Go().Wait();
         //EventAwaiterDemo.Go();
         //Features.Go();
         //GuiDeadlockWindow.Go();
         //Cancellation.Go().Wait();
         //ThreadIO.Go();
-        //var s = AwaitWebClient(new Uri("http://Wintellect.com/")).Result;
+        var s = AwaitWebClient(new Uri("http://Wintellect.com/")).Result;
     }
 
    private static async Task<String> AwaitWebClient(Uri uri) {
@@ -220,10 +220,10 @@ internal static class PipeDemo {
 
 internal static class AsyncFuncCodeTransformation {
    public static void Go() {
-      //var s = MyMethodAsync(5).Result;
-      //"Done"
-      var s = MyMethodAsync_ActualImplementation(5).Result;
-   }
+        //var s = MyMethodAsync(5).Result;
+        //"Done"
+        var s = MyMethodAsync_ActualImplementation(5).Result;
+    }
 
    private sealed class Type1 { }
    private sealed class Type2 { }
@@ -428,8 +428,8 @@ public static class TaskLogger {
             LogTime, Tag ?? "(none)", CallerMemberName, CallerFilePath, CallerLineNumber);
       }
    }
-
-   private static readonly ConcurrentDictionary<Task, TaskLogEntry> s_log = new ConcurrentDictionary<Task, TaskLogEntry>();
+    // Key:Id = 1, Status = RanToCompletion, Method = {null} Value:TaskLogEntry
+    private static readonly ConcurrentDictionary<Task, TaskLogEntry> s_log = new ConcurrentDictionary<Task, TaskLogEntry>();
    public static IEnumerable<TaskLogEntry> GetLogEntries() { return s_log.Values; }
 
    public static Task<TResult> Log<TResult>(this Task<TResult> task, String tag = null,
@@ -439,6 +439,7 @@ public static class TaskLogger {
       return (Task<TResult>)Log((Task)task, tag, callerMemberName, callerFilePath, callerLineNumber);
    }
 
+   // Static method with extension.
    public static Task Log(this Task task, String tag = null,
       [CallerMemberName] String callerMemberName = null,
       [CallerFilePath] String callerFilePath = null,
@@ -455,7 +456,8 @@ public static class TaskLogger {
       s_log[task] = logEntry;
       task.ContinueWith(t => { TaskLogEntry entry; s_log.TryRemove(t, out entry); },
          TaskContinuationOptions.ExecuteSynchronously);
-      return task;
+        // Id = 1, Status = RanToCompletion, Method = {null}
+       return task;   
    }
 }
 
@@ -548,7 +550,7 @@ internal static class Features {
    private static async Task InnerAsyncFunction() {
       await Task.Delay(1000);
    }
-
+   // Extension method.
    [MethodImpl(MethodImplOptions.AggressiveInlining)]  // Causes compiler to optimize the call away
    public static void NoWarning(this Task task) { }
 }
@@ -633,7 +635,7 @@ internal static class Cancellation {
       // throws 1st inner exception instead of AggregateException
       return await orignalTask;
    }
-
+   // A async with extension method.
    public static async Task WithCancellation(this Task task, CancellationToken ct) {
       var tcs = new TaskCompletionSource<Void>();
       using (ct.Register(t => ((TaskCompletionSource<Void>)t).TrySetResult(default(Void)), tcs)) {
