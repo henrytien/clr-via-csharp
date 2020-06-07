@@ -113,8 +113,8 @@ internal static class ExecutionContexts {
             ThreadPool.QueueUserWorkItem(AttemptAccess, stack);
          }
       }
-
-      public void AttemptAccess(Object stack) {
+       //"High->Low->High"
+       public void AttemptAccess(Object stack) {
          String domain = AppDomain.CurrentDomain.IsDefaultAppDomain() ? "HighSecurity" : "LowSecurity";
          Console.Write("Stack={0}, AppDomain={1}, Username=", stack, domain);
          try {
@@ -130,6 +130,7 @@ internal static class ExecutionContexts {
 internal static class CancellationDemo {
    public static void Go() {
       CancellingAWorkItem();
+
       Register();
       Linking();
    }
@@ -162,6 +163,7 @@ internal static class CancellationDemo {
    }
 
    private static void Register() {
+      //{System.Threading.CancellationTokenSource}
       var cts = new CancellationTokenSource();
       cts.Token.Register(() => Console.WriteLine("Canceled 1"));
       cts.Token.Register(() => Console.WriteLine("Canceled 2"));
@@ -375,6 +377,7 @@ internal static class TaskDemo {
 
    private static Int32 Sum(Int32 n) {
       Int32 sum = 0;
+      // Chech OverFlow
       for (; n > 0; n--) checked { sum += n; }
       return sum;
    }
