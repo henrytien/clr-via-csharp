@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 public static class PrimitveThreadSync {
    public static void Main() {
-      OptimizedAway();
-      StrangeBehavior.Go();
-      AsyncCoordinatorDemo.Go();
-      LockComparison.Go();
-      RegisteredWaitHandleDemo.Go();
-   }
+        //OptimizedAway();
+        //StrangeBehavior.Go();
+        AsyncCoordinatorDemo.Go();
+        //LockComparison.Go();
+        //RegisteredWaitHandleDemo.Go();
+    }
 
    private static void OptimizedAway() {
       // An expression of constants is computed at compile time then put into a local variable that is never used
@@ -216,6 +216,7 @@ internal static class AsyncCoordinatorDemo {
       private Timer m_timer;
 
       // This method MUST be called BEFORE initiating an operation
+      // Interlocked method.
       public void AboutToBegin(Int32 opsToAdd = 1) {
          Interlocked.Add(ref m_opCount, opsToAdd);
       }
@@ -242,7 +243,7 @@ internal static class AsyncCoordinatorDemo {
             throw new InvalidOperationException("Cancel cannot be called before AllBegun");
          ReportStatus(CoordinationStatus.Cancel);
       }
-
+     // Interlocked.Exchange method.
       private void ReportStatus(CoordinationStatus status) {
          if (m_timer != null) {  // If timer is still in play, kill it
             Timer timer = Interlocked.Exchange(ref m_timer, null);
