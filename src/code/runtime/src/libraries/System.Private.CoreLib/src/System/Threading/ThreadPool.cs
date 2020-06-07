@@ -936,6 +936,7 @@ namespace System.Threading
 
     public static partial class ThreadPool
     {
+        //workQueue construted by ThreadPoolWorkQueue().
         internal static readonly ThreadPoolWorkQueue s_workQueue = new ThreadPoolWorkQueue();
 
         /// <summary>Shim used to invoke <see cref="IAsyncStateMachineBox.MoveNext"/> of the supplied <see cref="IAsyncStateMachineBox"/>.</summary>
