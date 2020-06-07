@@ -15,9 +15,9 @@ using System.Runtime.Remoting.Messaging;
 
 public static class ComputeOps {
    public static void Main() {
-      ThreadPoolDemo.Go();
-      ExecutionContexts.Go();
-      CancellationDemo.Go();
+      //ThreadPoolDemo.Go();
+      //ExecutionContexts.Go();
+      //CancellationDemo.Go();
       TaskDemo.Go();
       ParallelDemo.Go();
       ParallelLinq.Go();
@@ -297,9 +297,9 @@ internal static class TaskDemo {
       // Start the parent Task so it can start its children
       parent.Start();
 
-      cwt.Wait(); // For testing purposes
+      //cwt.Wait(); // For testing purposes
    }
-
+   // Task Factory, can you understand?
    private static void TaskFactory() {
       Task parent = new Task(() => {
          var cts = new CancellationTokenSource();
