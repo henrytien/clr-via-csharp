@@ -95,20 +95,20 @@ internal sealed class SomeType {
 
 public static class CustomAttributes {
    public static void Main() {
-      DetectingAttributes.Go();
+      //DetectingAttributes.Go();
       MatchingAttributes.Go();
       ConditionalAttributeDemo.Go();
    }
 
    [Serializable]
    [DefaultMemberAttribute("Main")]
-   [DebuggerDisplayAttribute("Richter", Name = "Jeff", Target = typeof(DetectingAttributes))]
+   [DebuggerDisplayAttribute("Richter", Name = "Jeff", Target = typeof(DetectingAttributes))]  // arguments, no return value
    public sealed class DetectingAttributes {
       [Conditional("Debug")]
       [Conditional("Release")]
       public void DoSomething() { }
-
-      public DetectingAttributes() {
+      // No return value.
+      public  DetectingAttributes() {
       }
 
       [MethodImpl(MethodImplOptions.NoInlining)]
@@ -117,13 +117,14 @@ public static class CustomAttributes {
          Go(ShowAttributes);
          Go(ShowAttributesReflectionOnly);
       }
-
+      // MemberInfo is abstract class.
       private static void Go(Action<MemberInfo> showAttributes) {
          // Show the set of attributes applied to this type
          showAttributes(typeof(DetectingAttributes));
 
-         // Get the set of methods associated with the type
-         var members = 
+            // Get the set of methods associated with the type
+            // Class MethodBase : MemberInfo
+            var members = 
             from m in typeof(DetectingAttributes).GetTypeInfo().DeclaredMembers.OfType<MethodBase>()
             where m.IsPublic select m;
 
@@ -134,7 +135,9 @@ public static class CustomAttributes {
       }
 
       private static void ShowAttributes(MemberInfo attributeTarget) {
-         var attributes = attributeTarget.GetCustomAttributes<Attribute>();
+            // {System.Attribute[3]} Reflection.DefaultMember
+            // Diagnositics.DebuggerDisplayAttribute SerializableAttribute
+            var attributes = attributeTarget.GetCustomAttributes<Attribute>();
 
          Console.WriteLine("Attributes applied to {0}: {1}",
             attributeTarget.Name, (attributes.Count() == 0 ? "None" : String.Empty));
@@ -236,7 +239,7 @@ internal sealed class MatchingAttributes {
       Brokerage = 0x0004
    }
 
-
+   // AccountsAttribute
    [AttributeUsage(AttributeTargets.Class)]
    private sealed class AccountsAttribute : Attribute {
       private Accounts m_accounts;
@@ -244,19 +247,19 @@ internal sealed class MatchingAttributes {
       public AccountsAttribute(Accounts accounts) {
          m_accounts = accounts;
       }
-
+      // Override Match
       public override Boolean Match(Object obj) {
          // If the base class implements Match and the base class
          // is not Attribute, then uncomment the line below.
          // if (!base.Match(obj)) return false;
 
-         // Since ‘this’ isn’t null, if obj is null, 
-         // then the objects can’t match
+         // Since ?this? isn?t null, if obj is null, 
+         // then the objects can?t match
          // NOTE: This line may be deleted if you trust 
          // the base type implemented Match correctly.
          if (obj == null) return false;
 
-         // If the objects are of different types, they can’t match
+         // If the objects are of different types, they can?t match
          // NOTE: This line may be deleted if you trust 
          // the base type implemented Match correctly.
          if (this.GetType() != obj.GetType()) return false;
@@ -273,19 +276,19 @@ internal sealed class MatchingAttributes {
 
          return true;   // Objects match
       }
-
+      // Why override Equals, becuase you can check argument of obj.
       public override Boolean Equals(Object obj) {
          // If the base class implements Equals and the base class
          // is not Object, then uncomment the line below.
          // if (!base.Equals(obj)) return false;
 
-         // Since ‘this’ isn’t null, if obj is null, 
-         // then the objects can’t be equal
+         // Since ?this? isn?t null, if obj is null, 
+         // then the objects can?t be equal
          // NOTE: This line may be deleted if you trust 
          // the base type implemented Equals correctly.
          if (obj == null) return false;
 
-         // If the objects are of different types, they can’t be equal
+         // If the objects are of different types, they can?t be equal
          // NOTE: This line may be deleted if you trust 
          // the base type implemented Equals correctly.
          if (this.GetType() != obj.GetType()) return false;
@@ -312,7 +315,7 @@ internal sealed class MatchingAttributes {
 
    [Accounts(Accounts.Savings)]
    private sealed class ChildAccount { }
-
+   // No member class.
    [Accounts(Accounts.Savings | Accounts.Checking | Accounts.Brokerage)]
    private sealed class AdultAccount { }
 }
@@ -325,8 +328,9 @@ public static class ConditionalAttributeDemo {
    }
 
    public static void Go() {
+      // Determines whether any custom attributes are applied to a method of a type.
       Console.WriteLine("CondAttribute is {0}applied to Program type.",
          Attribute.IsDefined(typeof(ConditionalAttributeDemo),
-            typeof(CondAttribute)) ? "" : "not ");
+            typeof(CondAttribute)) ? "" : "not ",true);
    }
 }
