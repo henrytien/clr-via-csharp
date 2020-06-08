@@ -41,7 +41,7 @@ internal sealed class DelegateIntro {
 
    private static void InstanceDelegateDemo() {
       Console.WriteLine("----- Instance Delegate Demo -----");
-      DelegateIntro di = new DelegateIntro();
+      DelegateIntro di = new DelegateIntro(); // di is a instance of DelegateIntro.
       Counter(1, 3, new Feedback(di.FeedbackToFile));
 
       Console.WriteLine();
@@ -54,6 +54,7 @@ internal sealed class DelegateIntro {
       Feedback fb3 = new Feedback(di.FeedbackToFile);
 
       Feedback fbChain = null;
+      // Combine return a delegate.
       fbChain = (Feedback)Delegate.Combine(fbChain, fb1);
       fbChain = (Feedback)Delegate.Combine(fbChain, fb2);
       fbChain = (Feedback)Delegate.Combine(fbChain, fb3);
@@ -71,6 +72,7 @@ internal sealed class DelegateIntro {
       Feedback fb3 = new Feedback(di.FeedbackToFile);
 
       Feedback fbChain = null;
+      // Same effect as  (Feedback)Delegate.Combine(fbChain, fb)
       fbChain += fb1;
       fbChain += fb2;
       fbChain += fb3;
@@ -94,7 +96,7 @@ internal sealed class DelegateIntro {
    }
 
    private static void FeedbackToMsgBox(Int32 value) {
-      MessageBox.Show("Item=" + value);
+      //MessageBox.Show("Item=" + value);
    }
 
    private void FeedbackToFile(Int32 value) {
@@ -150,7 +152,7 @@ internal static class GetInvocationList {
    // Method that queries several components and returns a status report
    private static String GetComponentStatusReport(GetStatus status) {
 
-      // If the chain is empty, there’s is nothing to do.
+      // If the chain is empty, there?s is nothing to do.
       if (status == null) return null;
 
       // Use this to build the status report.
@@ -181,7 +183,7 @@ internal static class GetInvocationList {
       return report.ToString();
    }
 }
-
+// Delegate(String name){}.
 internal static class AnonymousMethods {
    public static void Go() {
       // Create and initialize a String array
@@ -272,6 +274,7 @@ internal static class DelegateReflection {
       Delegate d;
       try {
          // Convert the Arg1 argument to a method
+         // Create a method convert by the Arg1.
          MethodInfo mi = typeof(DelegateReflection).GetTypeInfo().GetDeclaredMethod(args[1]);
 
          // Create a delegate object that wraps the static method
@@ -305,6 +308,7 @@ internal static class DelegateReflection {
 
       try {
          // Invoke the delegate and show the result
+         // public object DynamicInvoke (params object[] args)
          Object result = d.DynamicInvoke(callbackArgs);
          Console.WriteLine("Result = " + result);
       }
