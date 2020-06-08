@@ -28,7 +28,7 @@ public static class Program {
       GenericException.Go();
       OneStatementDemo.Go();
       CodeContracts.Go();
-      UnhandledException.Go();
+      //UnhandledException.Go();
       ConstrainedExecutionRegion.Go();
    }
 }
@@ -65,13 +65,14 @@ internal static class Mechanics {
 internal static class GenericException {
    public static void Go() {
       try {
-         throw new Exception<DiskFullExceptionArgs>(new DiskFullExceptionArgs(@"C:\"), "The disk is full");
+         //throw new Exception<DiskFullExceptionArgs>(new DiskFullExceptionArgs(@"C:\"), "The disk is full");
       }
       catch (InvalidOperationException e) {// Exception<DiskFullExceptionArgs> e) {
          Console.WriteLine(e.Message);
       }
 
       // Verify that the exception is serializable
+      // Here is how can catch a exception.
       using (var stream = new MemoryStream()) {
          var e = new Exception<DiskFullExceptionArgs>(new DiskFullExceptionArgs(@"C:\"), "The disk is full");
          var formatter = new BinaryFormatter();
@@ -119,7 +120,7 @@ internal static class GenericException {
       public Exception(String message = null, Exception innerException = null)
          : this(null, message, innerException) { }
 
-      // The fourth public constructor because there is a field
+      // The fourth public constructor because there is a field.
       /// <summary>
       /// Initializes a new instance of the Exception class with additional arguments, 
       /// a specified error message, and a reference to the inner exception 
@@ -137,6 +138,7 @@ internal static class GenericException {
       // Because at least 1 field is defined, define the special deserialization constructor
       // Since this class is sealed, this constructor is private
       // If this class were not sealed, this constructor should be protected
+      // Different from above constructor.
       [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
       private Exception(SerializationInfo info, StreamingContext context)
          : base(info, context) { // Let the base deserialize its fields
@@ -175,13 +177,14 @@ internal static class GenericException {
       }
       public override int GetHashCode() { return base.GetHashCode(); }
    }
-
+   
    /// <summary>
    /// A base class that a custom exception would derive from in order to add its own exception arguments.
    /// </summary>
    [Serializable]
    public abstract class ExceptionArgs {
       /// <summary>The string message associated with this exception.</summary>
+      /// <summary>A virtual method to throw message.</summary>
       public virtual String Message { get { return String.Empty; } }
    }
 }
@@ -226,8 +229,8 @@ internal sealed class UnhandledException {
    public static void Go() {
       //var em = SetErrorMode(ErrorMode.NoGPFaultErrorBox);
       int x = 0;
-      x = 100 / x;
-      RecurseWithStackCheck();
+      //x = 100 / x;
+      //RecurseWithStackCheck();
 
       Console.Write("Install UE Handler (Y/N)?");
       ConsoleKeyInfo key = Console.ReadKey(false);
@@ -287,7 +290,7 @@ internal sealed class UnhandledException {
    }
    [DllImport("Kernel32", SetLastError = true, ExactSpelling = true)]
    private static extern ErrorMode SetErrorMode(ErrorMode mode);
-
+   // Recurse method.
    private static void RecurseWithStackCheck() {
       try {
          RuntimeHelpers.EnsureSufficientExecutionStack();
@@ -432,6 +435,7 @@ internal static class ConstrainedExecutionRegion {
    }
 
    private sealed class Type1 {
+      // Static constructor.
       static Type1() {
          // if this throws an exception, M won’t get called
          Console.WriteLine("Type1's static ctor called");
@@ -475,7 +479,7 @@ internal static class ConstrainedExecutionRegion {
       Boolean taken = true;
       if ((Boolean)o) {
          Monitor.Enter(s_myLock/*, ref taken*/);
-         Thread.Sleep(10000);
+         Thread.Sleep(2000);
          if (taken) Monitor.Exit(s_myLock);
       } else {
          RuntimeHelpers.ExecuteCodeWithGuaranteedCleanup(
@@ -503,7 +507,7 @@ internal static class CodeContracts {
       public void AddItem(Item item) {
          AddItemHelper(m_cart, item, ref m_totalCost);
       }
-
+      // AddItemHelper
       private static void AddItemHelper(List<Item> m_cart, Item newItem, ref Decimal totalCost) {
          // Preconditions: 
          Contract.Requires(newItem != null);
