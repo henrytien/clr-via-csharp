@@ -6,10 +6,12 @@ using System;
 using System.Collections.Generic;
 
 public static class Parameters {
-   public static void Main() {
-      OptionalAndNamedParameters.Go();
-      MethodsThatTakeVariableArguments.Go();
-   }
+    public static void Main()
+    {
+        //OptionalAndNamedParameters.Go();
+        //MethodsThatTakeVariableArguments.Go();
+        OutAndRefParameters.Go();
+    }
 }
 
 internal static class OptionalAndNamedParameters {
