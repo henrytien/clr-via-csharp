@@ -10,9 +10,9 @@ public static class PrimitveThreadSync {
    public static void Main() {
         //OptimizedAway();
         //StrangeBehavior.Go();
-        AsyncCoordinatorDemo.Go();
+        //AsyncCoordinatorDemo.Go();
         //LockComparison.Go();
-        //RegisteredWaitHandleDemo.Go();
+        RegisteredWaitHandleDemo.Go();
     }
 
    private static void OptimizedAway() {
