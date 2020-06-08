@@ -8,7 +8,7 @@ using System.Globalization;
 
 public static class HybridThreadSync {
    public static void Main() {
-      HybridLocks.Go();
+      //HybridLocks.Go();
       Singletons.Go();
       AsyncSynchronization.Go();
       BlockingCollectionDemo.Go();
@@ -109,7 +109,7 @@ internal static class HybridLocks {
          // Other threads are blocked, wake 1 of them
          m_waiterLock.Set();  // Bad performance hit here
       }
-
+      // Dispose method.
       public void Dispose() { m_waiterLock.Dispose(); }
    }
 
@@ -135,6 +135,7 @@ internal static class HybridLocks {
          SpinWait spinwait = new SpinWait();
          for (Int32 spinCount = 0; spinCount < m_spincount; spinCount++) {
             // If the lock was free, this thread got it; set some state and return
+            // Interlocked.CompareExchange
             if (Interlocked.CompareExchange(ref m_waiters, 1, 0) == 0) goto GotLock;
 
             // Black magic: give others threads a chance to run 
@@ -536,11 +537,12 @@ internal static class Singletons {
    }
 
    public static void Go() {
+      // S value is ThreadSafetyMode={}, IsValueCreated=True, IsValueFaulted=False, Value=10:27:35 AM
       Lazy<String> s = new Lazy<String>(() => DateTime.Now.ToLongTimeString(), true);
       Console.WriteLine(s.IsValueCreated);   // false
       Console.WriteLine(s.Value);                  // Lambda is invoked now
       Console.WriteLine(s.IsValueCreated);   // true
-      Thread.Sleep(10000);
+      Thread.Sleep(1000);
       Console.WriteLine(s.Value);                  // Lambda is NOT invoked now; same result
 
       String name = null;
@@ -613,8 +615,8 @@ internal static class ConditionVariables {
 
 internal static class AsyncSynchronization {
    public static void Go() {
-      //SemaphoreSlimDemo();
-      ConcurrentExclusiveSchedulerDemo();
+        SemaphoreSlimDemo();
+        ConcurrentExclusiveSchedulerDemo();
       OneManyDemo();
    }
 
@@ -698,7 +700,7 @@ internal static class AsyncSynchronization {
       Console.ReadLine();
 }
 
-
+   // Async lock
    private static void OneManyDemo() {
       var asyncLock = new AsyncOneManyLock();
       List<Task> tasks = new List<Task>();
