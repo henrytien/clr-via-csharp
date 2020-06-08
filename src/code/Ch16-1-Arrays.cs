@@ -23,6 +23,7 @@ public static class Program {
 
    private static void ArrayIntro() {
       String[] sa = new String[1];
+      // Creates a one-dimensional Array.
       Array a1 = Array.CreateInstance(typeof(String), new Int32[] { 1 }, new Int32[] { 0 });
       Array a2 = Array.CreateInstance(typeof(String), new Int32[] { 1 }, new Int32[] { 1 });
       Console.WriteLine(sa.GetType().ToString());
@@ -118,6 +119,7 @@ public static class Program {
    }
 }
 
+//Dynamic arrays.
 internal static class DynamicArrays {
    public static void Go() {
       // I want a two-dimension array [2005..2009][1..4].
@@ -181,8 +183,9 @@ internal static class MultiDimArrayPerformance {
    public static void Go() {
       // Declare a 2-dimensional array
       Int32[,] a2Dim = new Int32[c_numElements, c_numElements];
-
+      // Compare here difference.
       // Declare a 2-dimensional array as a jagged array (a vector of vectors)
+      // {int[10000][]}
       Int32[][] aJagged = new Int32[c_numElements][];
       for (Int32 x = 0; x < c_numElements; x++)
          aJagged[x] = new Int32[c_numElements];
@@ -197,7 +200,7 @@ internal static class MultiDimArrayPerformance {
       // 3: Access all elements of the array using the unsafe technique
       Unsafe2DimArrayAccess(a2Dim);
    }
-
+   // DimArray
    private static Int32 Safe2DimArrayAccess(Int32[,] a) {
       Int32 sum = 0;
       for (Int32 x = 0; x < c_numElements; x++) {
@@ -207,7 +210,7 @@ internal static class MultiDimArrayPerformance {
       }
       return sum;
    }
-
+   // JaggedArray
    private static Int32 SafeJaggedArrayAccess(Int32[][] a) {
       Int32 sum = 0;
       for (Int32 x = 0; x < c_numElements; x++) {
@@ -217,7 +220,7 @@ internal static class MultiDimArrayPerformance {
       }
       return sum;
    }
-
+   // Unsafe and fixed.
    private static unsafe Int32 Unsafe2DimArrayAccess(Int32[,] a) {
       Int32 sum = 0, numElements = c_numElements * c_numElements;
       fixed (Int32* pi = a) {
