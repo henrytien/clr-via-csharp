@@ -12,7 +12,7 @@ using System.Security.Permissions;
 
 public static class RuntieSerialization {
    public static void Main() {
-      QuickStart.Go();
+      //QuickStart.Go();
       UsingNonSerializedFields.Go();
       OptionalField.Go();
       ISerializableVersioning.Go();
@@ -62,7 +62,7 @@ internal static class QuickStart {
       // Tell the formatter to deserialize the objects from the stream
       return formatter.Deserialize(stream);
    }
-
+   //DeepClone 
    private static Object DeepClone(Object original) {
       // Construct a temporary memory stream
       using (MemoryStream stream = new MemoryStream()) {
@@ -280,6 +280,7 @@ internal static class ISerializableVersioning {
             info.AddValue(baseType.FullName + "+" + mi[i].Name, ((FieldInfo)mi[i]).GetValue(this));
          }
       }
+      // Override ToString for Derived Object.
       public override String ToString() {
          return String.Format("Base Name={0}, Derived Name={1}", base.Name, m_name);
       }
