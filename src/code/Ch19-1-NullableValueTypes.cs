@@ -111,7 +111,7 @@ public static class Program {
    }
 
    private static void GetTypeOfNullable() {
-      Int32? x = 5;
+      Int32? x = 5;  // Cast to System.Int32
 
       // The line below displays "System.Int32"; 
       // not "System.Nullable<Int32>"
