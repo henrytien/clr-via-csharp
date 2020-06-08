@@ -31,7 +31,7 @@ public static class Program {
       // Implicit conversion from non-nullable Int32 to Nullable<Int32>
       Int32? a = 5;
 
-      // Implicit conversion from ‘null’ to Nullable<Int32>
+      // Implicit conversion from ?null? to Nullable<Int32>
       Int32? b = null;
 
       // Explicit conversion from Nullable<Int32> to non-nullable Int32
@@ -93,7 +93,7 @@ public static class Program {
       o = n;   // o refers to a boxed Int32
       Console.WriteLine("o's type={0}", o.GetType()); // "System.Int32"
    }
-
+   // Unboxing
    private static void Unboxing() {
       // Create a boxed Int32
       Object o = 5;
@@ -105,9 +105,9 @@ public static class Program {
       // Create a reference initialized to null
       o = null;
 
-      // “Unbox” it into a Nullable<Int32> and into an Int32
+      // ?Unbox? it into a Nullable<Int32> and into an Int32
       a = (Int32?)o;       // a = null
-      b = (Int32) o;       // NullReferenceException
+      //b = (Int32) o;       // NullReferenceException
    }
 
    private static void GetTypeOfNullable() {
