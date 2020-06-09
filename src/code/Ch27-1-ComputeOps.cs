@@ -17,14 +17,14 @@ public static class ComputeOps {
    public static void Main() {
         //ThreadPoolDemo.Go();
         //ExecutionContexts.Go();
-        CancellationDemo.Go();
-      //  TaskDemo.Go();
-      //  ParallelDemo.Go();
-      //ParallelLinq.Go();
-      //TimerDemo.Go();
-      //DelayDemo.Go();
-      //FalseSharing.Go();
-   }
+        //CancellationDemo.Go();
+        TaskDemo.Go();
+        //  ParallelDemo.Go();
+        //ParallelLinq.Go();
+        //TimerDemo.Go();
+        //DelayDemo.Go();
+        //FalseSharing.Go();
+    }
 }
 
 internal static class ThreadPoolDemo {
@@ -203,16 +203,16 @@ internal static class CancellationDemo {
 
 internal static class TaskDemo {
    public static void Go() {
-      UsingTaskInsteadOfQueueUserWorkItem();
-      WaitForResult();
-      Cancel();
-      ContinueWith();
-      MultipleContinueWith();
-      ParentChild();
-      TaskFactory();
-      UnobservedException();
-      SynchronizationContextTaskScheduler();
-   }
+        //UsingTaskInsteadOfQueueUserWorkItem();
+        WaitForResult();
+        //Cancel();
+        //ContinueWith();
+        //MultipleContinueWith();
+        //ParentChild();
+        //TaskFactory();
+        //UnobservedException();
+        //SynchronizationContextTaskScheduler();
+    }
 
    private static void UsingTaskInsteadOfQueueUserWorkItem() {
       ThreadPool.QueueUserWorkItem(ComputeBoundOp, 5);
@@ -220,22 +220,28 @@ internal static class TaskDemo {
       Task.Run(() => ComputeBoundOp(5));
    }
 
-   private static void WaitForResult() {
-      // Create and start a Task
-      Task<Int32> t = new Task<Int32>(n => Sum((Int32)n), 10000);
+    private static void WaitForResult() {
+        // Create and start a Task
+        Task<Int32> t = new Task<Int32>(n => Sum((Int32)n), 10000);
 
-      // You can start the task sometime later
-      t.Start();
+        // You can start the task sometime later
+        t.Start();
 
-      // Optionally, you can explicitly wait for the task to complete
-      t.Wait(); // FYI: Overloads exist accepting a timeout/CancellationToken
+        // Optionally, you can explicitly wait for the task to complete
+        //t.Wait(); // FYI: Overloads exist accepting a timeout/CancellationToken
+
+        if (!t.Wait(10))
+        {
+            Console.WriteLine("Too late!!");
+        }
 
       // Get the result (the Result property internally calls Wait) 
       Console.WriteLine("The sum is: " + t.Result);   // An Int32 value
    }
-
+   // Task's Cancel method.
    private static void Cancel() {
       CancellationTokenSource cts = new CancellationTokenSource();
+      // Return a Int32
       Task<Int32> t = Task.Run(() => Sum(cts.Token, 10000), cts.Token);
 
       // Sometime later, cancel the CancellationTokenSource to cancel the Task
@@ -270,6 +276,7 @@ internal static class TaskDemo {
       Task<Int32> t = Task.Run(() => Sum(10000));
 
       // Each ContinueWith returns a Task but you usually don't care
+      // TaskContinuatinOptions is enum.
       t.ContinueWith(task => Console.WriteLine("The sum is: " + task.Result),
          TaskContinuationOptions.OnlyOnRanToCompletion);
       t.ContinueWith(task => Console.WriteLine("Sum threw: " + task.Exception),
@@ -379,7 +386,10 @@ internal static class TaskDemo {
      //System.Windows.Forms.Application.Run();
    }
 
-   private static void ComputeBoundOp(Object state) { }
+    private static void ComputeBoundOp(Object state)
+    {
+        Console.WriteLine("State: {0}", state);
+    }
 
    private static Int32 Sum(Int32 n) {
       Int32 sum = 0;
@@ -392,9 +402,10 @@ internal static class TaskDemo {
       Int32 sum = 0;
       for (; n > 0; n--) {
 
-         // The following line throws OperationCanceledException when Cancel 
-         // is called on the CancellationTokenSource referred to by the token
-         ct.ThrowIfCancellationRequested();
+            // The following line throws OperationCanceledException when Cancel 
+            // is called on the CancellationTokenSource referred to by the token
+            // How to throw an exception when OperationCanceledException
+            ct.ThrowIfCancellationRequested();
 
          //Thread.Sleep(0);   // Simulate taking a long time
          checked { sum += n; }
