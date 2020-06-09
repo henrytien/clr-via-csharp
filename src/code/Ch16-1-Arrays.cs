@@ -154,6 +154,7 @@ internal static class ArrayTypes {
       Console.WriteLine(a.GetType());	// System.String[]
 
       // Create a 1-dim, 0-based array, with no elements in it
+      // Array.CreateInstance
       a = Array.CreateInstance(typeof(String), new Int32[] { 0 }, new Int32[] { 0 });
       Console.WriteLine(a.GetType());	// System.String[]
 

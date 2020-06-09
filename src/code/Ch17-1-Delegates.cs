@@ -54,7 +54,8 @@ internal sealed class DelegateIntro {
       Feedback fb3 = new Feedback(di.FeedbackToFile);
 
       Feedback fbChain = null;
-      // Combine return a delegate.
+      // Combine return a delegate and must explicit cast, otherwise Delegate.Combine
+      // return a System.Delegate.
       fbChain = (Feedback)Delegate.Combine(fbChain, fb1);
       fbChain = (Feedback)Delegate.Combine(fbChain, fb2);
       fbChain = (Feedback)Delegate.Combine(fbChain, fb3);
