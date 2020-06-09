@@ -22,8 +22,8 @@ public static class ComputeOps {
         //ParallelDemo.Go();
         //ParallelLinq.Go();
         //TimerDemo.Go();
-        DelayDemo.Go();
-        //FalseSharing.Go();
+        //DelayDemo.Go();
+        FalseSharing.Go();
     }
 }
 
