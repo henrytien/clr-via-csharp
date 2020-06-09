@@ -19,9 +19,9 @@ public static class ComputeOps {
         //ExecutionContexts.Go();
         //CancellationDemo.Go();
         //TaskDemo.Go();
-        ParallelDemo.Go();
+        //ParallelDemo.Go();
         //ParallelLinq.Go();
-        //TimerDemo.Go();
+        TimerDemo.Go();
         //DelayDemo.Go();
         //FalseSharing.Go();
     }
@@ -505,7 +505,7 @@ internal static class ParallelDemo {
          () => Method2(),
          () => Method3());
    }
-    // All files of bytes are caculated by Paraller.
+    // All files of bytes are calculated by Parallel.
     private static Int64 DirectoryBytes(String path, String searchPattern, SearchOption searchOption) {
       var files = Directory.EnumerateFiles(path, searchPattern, searchOption);
       Int64 masterTotal = 0;
@@ -528,7 +528,7 @@ internal static class ParallelDemo {
             finally { if (fs != null) fs.Dispose(); }
             return taskLocalTotal + fileLength;
          },
-         // Here is a Interlocked.Add() method.
+         // Here is an Interlocked.Add() method.
          taskLocalTotal => { // localFinally: Invoked once per task at end
             // Atomically add this task's total to the "master" total
             Interlocked.Add(ref masterTotal, taskLocalTotal);
