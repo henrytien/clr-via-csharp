@@ -10,11 +10,11 @@ using Microsoft.Win32.SafeHandles;
 
 public sealed class Progam {
    public static void Main() {
-      Roots.Go();
-      DebuggingRoots.Go();
-      GCNotifications.Go();
-      SafeHandleInterop.Go();
-      GCBeepDemo.Go();
+      //Roots.Go();
+      //DebuggingRoots.Go();
+      //GCNotifications.Go();
+      //SafeHandleInterop.Go();
+      //GCBeepDemo.Go();
       CircularDependency.Go();
       FixedStatement.Go();
       MemoryPressureAndHandleCollector.Go();
@@ -38,10 +38,11 @@ internal static class Roots {
       // PrepareDelegate forces WriteBytes to be compiled now
       RuntimeHelpers.PrepareDelegate(new Action<Byte[]>(st.WriteBytes));
 
-      // Launch the debugger now so I can step into WriteBytes and capture the 
-      // native code via the Disassembly window. NOTE: Launching the debugger 
-      // after compiling the code causes optimized code to be generated
-      Debugger.Launch();
+    // Launch the debugger now so I can step into WriteBytes and capture the 
+    // native code via the Disassembly window. NOTE: Launching the debugger 
+    // after compiling the code causes optimized code to be generated
+    // System.NotImplementedException: The method or operation is not implemented
+    //Debugger.Launch();
 
       st.WriteBytes(new Byte[] { 1, 2, 3 });
    }
@@ -88,7 +89,8 @@ internal static class DebuggingRoots {
 
 internal static class GCBeepDemo {
    public static void Go() {
-      // Register a callback method to be invoked whenever a GC occurs. 
+      // Register a callback method to be invoked whenever a GC occurs.
+      // Here is an example event with a lambda expression.
       GCNotification.GCDone += g => Console.Beep(g == 0 ? 800 : 8000, 200);
       var l = new List<Object>();
       // Construct a lot of 100-byte objects.
@@ -96,12 +98,12 @@ internal static class GCBeepDemo {
          Console.WriteLine(x);
          Byte[] b = new Byte[100];
          l.Add(b);
-      }
+       }
    }
 
    public static class GCNotification {
       private static Action<Int32> s_gcDone = null; // The event’s field
-
+      // GC event
       public static event Action<Int32> GCDone {
          add {
             // If there were no registered delegates 
@@ -141,8 +143,8 @@ internal static class GCBeepDemo {
 
 internal static class GCNotifications {
    public static void Go() {
-      GC.RegisterForFullGCNotification(1, 1);
-      ThreadPool.QueueUserWorkItem(_ => {
+        GC.RegisterForFullGCNotification(1, 1);
+        ThreadPool.QueueUserWorkItem(_ => {
          for (; ; ) {
             Console.WriteLine("Approach: " + GC.WaitForFullGCApproach(-1));
             Console.WriteLine("Complete: " + GC.WaitForFullGCComplete(-1));
@@ -275,7 +277,7 @@ internal sealed class DisposePattern {
       File.Delete("Temp.dat");  // This always works now.
    }
 }
-
+// CircularDependency 
 internal static class CircularDependency {
    public static void Go() {
       FileStream fs = new FileStream("DataFile.dat", FileMode.Create);
@@ -292,7 +294,7 @@ internal static class FixedStatement {
    unsafe public static void Go() {
       // Allocate a bunch of objects that immediately become garbage
       for (Int32 x = 0; x < 10000; x++) new Object();
-
+      // IntPtr is a struct.
       IntPtr originalMemoryAddress;
       Byte[] bytes = new Byte[1000];   // Allocate this array after the garbage object
 
@@ -300,6 +302,7 @@ internal static class FixedStatement {
       fixed (Byte* pbytes = bytes) { originalMemoryAddress = (IntPtr)pbytes; }
 
       // Force a collection; the garbage objects will go away & the Byte[] might be compacted
+      // Finalizer Thread and have a <Thread Pool>
       GC.Collect();
 
       // Get the address in memory of the Byte[] now & compare it to the first address
@@ -313,6 +316,7 @@ internal static class FixedStatement {
 internal static class MemoryPressureAndHandleCollector {
    public static void Go() {
       MemoryPressureDemo(0);                 // 0    causes infrequent GCs
+      // Why debug the main thread is gone.
       MemoryPressureDemo(10 * 1024 * 1024);  // 10MB causes frequent GCs
 
       HandleCollectorDemo();
@@ -328,6 +332,7 @@ internal static class MemoryPressureAndHandleCollector {
 
       // For demo purposes, force everything to be cleaned-up
       GC.Collect();
+      // BigNativeResource destroy.
       GC.WaitForPendingFinalizers();
    }
 
@@ -364,7 +369,7 @@ internal static class MemoryPressureAndHandleCollector {
       GC.Collect();
       GC.WaitForPendingFinalizers();
    }
-
+   // HandleCollector
    private sealed class LimitedResource {
       // Create a HandleCollector telling it that collections should
       // occur when two or more of these objects exist in the heap
@@ -375,6 +380,7 @@ internal static class MemoryPressureAndHandleCollector {
          s_hc.Add();
          Console.WriteLine("LimitedResource create.  Count={0}", s_hc.Count);
       }
+      // Finalize thread will be executed. 
       ~LimitedResource() {
          // Tell HandleCollector that 1 less LimitResource object is in the heap
          s_hc.Remove();
@@ -387,7 +393,8 @@ internal static class MemoryFailPointDemo {
    public static void Go() {
       try {
          // Logically reserve 1.5GB of memory
-         using (MemoryFailPoint mfp = new MemoryFailPoint(1500)) {
+         // MacOS exception 
+         using (MemoryFailPoint mfp = new MemoryFailPoint(15)) {
             // Perform memory-hungry algorithm in here
          }
       }
