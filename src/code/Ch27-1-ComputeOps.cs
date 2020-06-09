@@ -204,8 +204,8 @@ internal static class CancellationDemo {
 internal static class TaskDemo {
    public static void Go() {
         //UsingTaskInsteadOfQueueUserWorkItem();
-        WaitForResult();
-        //Cancel();
+        //WaitForResult();
+        Cancel();
         //ContinueWith();
         //MultipleContinueWith();
         //ParentChild();
@@ -244,10 +244,10 @@ internal static class TaskDemo {
       // Return a Int32
       Task<Int32> t = Task.Run(() => Sum(cts.Token, 10000), cts.Token);
 
-      // Sometime later, cancel the CancellationTokenSource to cancel the Task
-      cts.Cancel();
+        // Sometime later, cancel the CancellationTokenSource to cancel the Task
+        cts.Cancel();
 
-      try {
+        try {
          // If the task got canceled, Result will throw an AggregateException
          Console.WriteLine("The sum is: " + t.Result);   // An Int32 value
       }
