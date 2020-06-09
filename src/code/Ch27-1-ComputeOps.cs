@@ -209,8 +209,8 @@ internal static class TaskDemo {
         //ContinueWith();
         //MultipleContinueWith();
         //ParentChild();
-        TaskFactory(); i
-        //UnobservedException();
+        //TaskFactory(); 
+        UnobservedException();
         //SynchronizationContextTaskScheduler();
     }
 
@@ -364,11 +364,13 @@ internal static class TaskDemo {
    }
 
    private static void UnobservedException() {
+      // Event of UnobervedTaskException, by default, it would be ternminate the process.
+      // TaskScheduler is an abstract class.
       TaskScheduler.UnobservedTaskException += (sender, e) => {
-         //e.SetObserved();
-         Console.WriteLine("Unobserved exception {0}", e.Exception, e.Observed);
+          e.SetObserved(); // m_observed = true
+          Console.WriteLine("Unobserved exception {0}", e.Exception, e.Observed);
       };
-
+      // StartNew method that can create a task and start the task.
       Task parent = Task.Factory.StartNew(() => {
          Task child = Task.Factory.StartNew(() => { throw new InvalidOperationException(); }, TaskCreationOptions.AttachedToParent);
          // Child’s exception is observed, but not from its parent
