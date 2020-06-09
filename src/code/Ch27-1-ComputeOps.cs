@@ -18,12 +18,12 @@ public static class ComputeOps {
         //ThreadPoolDemo.Go();
         //ExecutionContexts.Go();
         CancellationDemo.Go();
-        TaskDemo.Go();
-        ParallelDemo.Go();
-      ParallelLinq.Go();
-      TimerDemo.Go();
-      DelayDemo.Go();
-      FalseSharing.Go();
+      //  TaskDemo.Go();
+      //  ParallelDemo.Go();
+      //ParallelLinq.Go();
+      //TimerDemo.Go();
+      //DelayDemo.Go();
+      //FalseSharing.Go();
    }
 }
 
@@ -142,7 +142,7 @@ internal static class CancellationDemo {
         // Pass the CancellationToken and the number-to-count-to into the operation
         // Token is a struct CancellationToken
         // Here is a lambda function of Count.
-        ThreadPool.QueueUserWorkItem(o => Count(cts.Token, 1000));
+        ThreadPool.QueueUserWorkItem(o => Count(cts.Token, 100));
 
       Console.WriteLine("Press <Enter> to cancel the operation.");
       Console.ReadLine();
@@ -155,7 +155,7 @@ internal static class CancellationDemo {
 
    private static void Count(CancellationToken token, Int32 countTo) {
       for (Int32 count = 0; count < countTo; count++) {
-         if (token.IsCancellationRequested) {
+         if (token.IsCancellationRequested) { // When call cts.Cancel()
             Console.WriteLine("Count is cancelled");
             break; // Exit the loop to stop the operation
          }
@@ -173,12 +173,14 @@ internal static class CancellationDemo {
       cts.Token.Register(() => Console.WriteLine("Canceled 2"));
 
       // To test, let's just cancel it now and have the 2 callbacks execute
+      // LIFO Canceld 2 Canceld 1
       cts.Cancel();
    }
 
    private static void Linking() {
       // Create a CancellationTokenSource
       var cts1 = new CancellationTokenSource();
+      // Register parameter is an Action.
       cts1.Token.Register(() => Console.WriteLine("cts1 canceled"));
 
       // Create another CancellationTokenSource
