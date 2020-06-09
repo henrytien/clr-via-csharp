@@ -4,7 +4,7 @@ using System.Threading;
 public static class ThreadBasics {
    public static void Main() {
         //FirstThread.Go();
-        //BackgroundDemo.Go(true);
+        BackgroundDemo.Go(true);
         BackgroundDemo.Go(false);
     }
 }
