@@ -208,8 +208,8 @@ internal static class TaskDemo {
         //Cancel();
         //ContinueWith();
         //MultipleContinueWith();
-        ParentChild();
-        //TaskFactory();
+        //ParentChild();
+        TaskFactory(); i
         //UnobservedException();
         //SynchronizationContextTaskScheduler();
     }
@@ -317,6 +317,8 @@ internal static class TaskDemo {
    private static void TaskFactory() {
       Task parent = new Task(() => {
          var cts = new CancellationTokenSource();
+          // Have a return value with Int32, and here you can assign the pramater
+          // ExecuteSynchronously, that's a concurrency model.
          var tf = new TaskFactory<Int32>(cts.Token, TaskCreationOptions.AttachedToParent, TaskContinuationOptions.ExecuteSynchronously, TaskScheduler.Default);
 
          // This tasks creates and starts 3 child tasks
@@ -334,6 +336,7 @@ internal static class TaskDemo {
          // Then pass the maximum value to another task which displays the maximum result
          tf.ContinueWhenAll(
             childTasks,
+            // Check the Max value of tasks and TaskStatus equal to TaskStatus.RanToCompletion.
             completedTasks => completedTasks.Where(t => t.Status == TaskStatus.RanToCompletion).Max(t => t.Result),
             CancellationToken.None)
             .ContinueWith(t => Console.WriteLine("The maximum is: " + t.Result),
