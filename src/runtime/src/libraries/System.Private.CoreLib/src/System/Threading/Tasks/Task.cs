@@ -3924,6 +3924,9 @@ namespace System.Threading.Tasks
         #endregion
 
         #region Func<Task, Object, TResult> continuation
+        /// <summary>
+		/// Reading continuation method, inside continue call ContinueWithCore.
+		/// </summary>
 
         /// <summary>
         /// Creates a continuation that executes when the target <see cref="Task"/> completes.

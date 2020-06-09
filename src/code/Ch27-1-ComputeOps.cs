@@ -205,8 +205,8 @@ internal static class TaskDemo {
    public static void Go() {
         //UsingTaskInsteadOfQueueUserWorkItem();
         //WaitForResult();
-        Cancel();
-        //ContinueWith();
+        //Cancel();
+        ContinueWith();
         //MultipleContinueWith();
         //ParentChild();
         //TaskFactory();
