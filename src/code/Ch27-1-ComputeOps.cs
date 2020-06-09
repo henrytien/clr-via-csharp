@@ -206,9 +206,9 @@ internal static class TaskDemo {
         //UsingTaskInsteadOfQueueUserWorkItem();
         //WaitForResult();
         //Cancel();
-        ContinueWith();
+        //ContinueWith();
         //MultipleContinueWith();
-        //ParentChild();
+        ParentChild();
         //TaskFactory();
         //UnobservedException();
         //SynchronizationContextTaskScheduler();
@@ -277,8 +277,8 @@ internal static class TaskDemo {
 
       // Each ContinueWith returns a Task but you usually don't care
       // TaskContinuatinOptions is enum.
-      t.ContinueWith(task => Console.WriteLine("The sum is: " + task.Result),
-         TaskContinuationOptions.OnlyOnRanToCompletion);
+      //t.ContinueWith(task => Console.WriteLine("The sum is: " + task.Result),
+      //   TaskContinuationOptions.OnlyOnRanToCompletion);
       t.ContinueWith(task => Console.WriteLine("Sum threw: " + task.Exception),
          TaskContinuationOptions.OnlyOnFaulted);
       t.ContinueWith(task => Console.WriteLine("Sum was canceled"),
@@ -290,12 +290,13 @@ internal static class TaskDemo {
       catch (AggregateException) {
       }
    }
-
+   // How to start children tasks with their parent.
+   // Why use this model.
    private static void ParentChild() {
       Task<Int32[]> parent = new Task<Int32[]>(() => {
          var results = new Int32[3];   // Create an array for the results
 
-         // This tasks creates and starts 3 child tasks
+         // These tasks creates and starts 3 child tasks
          new Task(() => results[0] = Sum(10000), TaskCreationOptions.AttachedToParent).Start();
          new Task(() => results[1] = Sum(20000), TaskCreationOptions.AttachedToParent).Start();
          new Task(() => results[2] = Sum(30000), TaskCreationOptions.AttachedToParent).Start();
@@ -310,8 +311,8 @@ internal static class TaskDemo {
       // Start the parent Task so it can start its children
       parent.Start();
 
-      //cwt.Wait(); // For testing purposes
-   }
+        cwt.Wait(); // For testing purposes
+    }
    // Task Factory, can you understand?
    private static void TaskFactory() {
       Task parent = new Task(() => {
