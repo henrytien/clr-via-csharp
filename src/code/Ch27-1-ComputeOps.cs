@@ -15,11 +15,11 @@ using System.Runtime.Remoting.Messaging;
 
 public static class ComputeOps {
    public static void Main() {
-      //ThreadPoolDemo.Go();
-      //ExecutionContexts.Go();
-      //CancellationDemo.Go();
-      //TaskDemo.Go();
-      ParallelDemo.Go();
+        //ThreadPoolDemo.Go();
+        //ExecutionContexts.Go();
+        CancellationDemo.Go();
+        TaskDemo.Go();
+        ParallelDemo.Go();
       ParallelLinq.Go();
       TimerDemo.Go();
       DelayDemo.Go();
@@ -136,13 +136,17 @@ internal static class CancellationDemo {
    }
 
    private static void CancellingAWorkItem() {
+      // Initialize cts object.
       CancellationTokenSource cts = new CancellationTokenSource();
 
-      // Pass the CancellationToken and the number-to-count-to into the operation
-      ThreadPool.QueueUserWorkItem(o => Count(cts.Token, 1000));
+        // Pass the CancellationToken and the number-to-count-to into the operation
+        // Token is a struct CancellationToken
+        // Here is a lambda function of Count.
+        ThreadPool.QueueUserWorkItem(o => Count(cts.Token, 1000));
 
       Console.WriteLine("Press <Enter> to cancel the operation.");
       Console.ReadLine();
+      // How to cancel a token source.
       cts.Cancel();  // If Count returned already, Cancel has no effect on it
       // Cancel returns immediately, and the method continues running here...
 
