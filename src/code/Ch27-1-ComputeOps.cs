@@ -18,8 +18,8 @@ public static class ComputeOps {
         //ThreadPoolDemo.Go();
         //ExecutionContexts.Go();
         //CancellationDemo.Go();
-        TaskDemo.Go();
-        //  ParallelDemo.Go();
+        //TaskDemo.Go();
+        ParallelDemo.Go();
         //ParallelLinq.Go();
         //TimerDemo.Go();
         //DelayDemo.Go();
@@ -210,8 +210,8 @@ internal static class TaskDemo {
         //MultipleContinueWith();
         //ParentChild();
         //TaskFactory(); 
-        UnobservedException();
-        //SynchronizationContextTaskScheduler();
+        //UnobservedException();
+        SynchronizationContextTaskScheduler();
     }
 
    private static void UsingTaskInsteadOfQueueUserWorkItem() {
@@ -478,7 +478,7 @@ internal static class ParallelDemo {
       Console.WriteLine("The total bytes of all files in {0} is {1:N0}.",
          path, DirectoryBytes(@path, "*.*", SearchOption.TopDirectoryOnly));
    }
-
+   
    private static void SimpleUsage() {
       // One thread performs all this work sequentially
       for (Int32 i = 0; i < 1000; i++) DoWork(i);
@@ -499,13 +499,14 @@ internal static class ParallelDemo {
       Method3();
 
       // The thread pool’s threads execute the methods in parallel
+      // Paraller.Invoke parameters are delegate, and you can use lambda expression.
       Parallel.Invoke(
          () => Method1(),
          () => Method2(),
          () => Method3());
    }
-
-   private static Int64 DirectoryBytes(String path, String searchPattern, SearchOption searchOption) {
+    // All files of bytes are caculated by Paraller.
+    private static Int64 DirectoryBytes(String path, String searchPattern, SearchOption searchOption) {
       var files = Directory.EnumerateFiles(path, searchPattern, searchOption);
       Int64 masterTotal = 0;
 
@@ -527,7 +528,7 @@ internal static class ParallelDemo {
             finally { if (fs != null) fs.Dispose(); }
             return taskLocalTotal + fileLength;
          },
-
+         // Here is a Interlocked.Add() method.
          taskLocalTotal => { // localFinally: Invoked once per task at end
             // Atomically add this task's total to the "master" total
             Interlocked.Add(ref masterTotal, taskLocalTotal);
