@@ -8,12 +8,12 @@ using System.Globalization;
 
 public static class HybridThreadSync {
    public static void Main() {
-      //HybridLocks.Go();
-      Singletons.Go();
-      AsyncSynchronization.Go();
-      BlockingCollectionDemo.Go();
-      Console.ReadLine();
-   }
+        HybridLocks.Go();
+        //Singletons.Go();
+        //AsyncSynchronization.Go();
+        //BlockingCollectionDemo.Go();
+        //Console.ReadLine();
+    }
 }
 
 internal static class HybridLocks {
@@ -83,12 +83,14 @@ internal static class HybridLocks {
       Console.WriteLine("Incrementing x in lock: {0:N0}", sw.ElapsedMilliseconds);
       Console.ReadLine();
    }
-
+   // User-mode and Kernel-mode
    public sealed class SimpleHybridLock : IDisposable {
       // The Int32 is used by the primitive user-mode constructs (Interlocked mehtods)
       private Int32 m_waiters = 0;
 
       // The AutoResetEvent is the primitive kernel-mode construct
+      // AutoResetEvent is come from EventHandle,  and EventHandle inheritance from
+      // WaitHandle, in WaitHandle, have a virtual method of WaitOne()
       private readonly AutoResetEvent m_waiterLock = new AutoResetEvent(false);
 
       public void Enter() {
@@ -97,6 +99,7 @@ internal static class HybridLocks {
             return; // Lock was free, no contention, just return
 
          // There is contention, block this thread
+         // WaitOne is virtual function.
          m_waiterLock.WaitOne();  // Bad performance hit here
          // When WaitOne returns, this thread now has the lock
       }
