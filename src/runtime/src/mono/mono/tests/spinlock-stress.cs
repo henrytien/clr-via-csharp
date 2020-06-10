@@ -21,9 +21,9 @@ public class Tests
 
 			ParallelTestHelper.ParallelStressTest (wrapper, delegate {
 				bool taken = false;
-				//wrapper.Lock.Enter (ref taken);
-				wrapper.Lock.TryEnter (200,ref taken);
-				int current = currentCount++;
+                wrapper.Lock.Enter(ref taken);
+                //wrapper.Lock.TryEnter (200,ref taken);
+                int current = currentCount++;
 				if (current != 0)
 					fail = true;
 
