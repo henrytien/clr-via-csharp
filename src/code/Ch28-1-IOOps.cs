@@ -31,7 +31,7 @@ public static class IOOps {
         //GuiDeadlockWindow.Go();
         //Cancellation.Go().Wait();
         //ThreadIO.Go();
-        var s = AwaitWebClient(new Uri("http://Wintellect.com/")).Result;
+        var s = AwaitWebClient(new Uri("https://google.com/")).Result;
     }
 
    private static async Task<String> AwaitWebClient(Uri uri) {
@@ -44,9 +44,9 @@ public static class IOOps {
       // When a string completes downloading, the WebClient object raises the
       // DownloadStringCompleted event which completes the TaskCompletionSource
       wc.DownloadStringCompleted += (s, e) => {
-         if (e.Cancelled) tcs.SetCanceled();
+         if (e.Cancelled) tcs.SetCanceled();  // Easy to use.
          else if (e.Error != null) tcs.SetException(e.Error);
-         else tcs.SetResult(e.Result);
+         else tcs.SetResult(e.Result); // Here is that's why to use TaskCompletionSource.
       };
 
       // Start the asynchronous operation
@@ -183,6 +183,7 @@ internal static class PipeDemo {
 
          // We want to save the timestamp of the most-recent client request. 
          // Since many clients can run concurrently, this has to be thread-safe.
+         // Await lock to wait async task.
          await s_lock.WaitAsync(); // Asynchronously request exclusive access
 
          // When we get here, we know no other thread is touching s_lastClientRequest
@@ -224,12 +225,12 @@ internal static class AsyncFuncCodeTransformation {
         //"Done"
         var s = MyMethodAsync_ActualImplementation(5).Result;
     }
-
+   // A sealed class and nothing in the class.
    private sealed class Type1 { }
    private sealed class Type2 { }
    private static Task<Type1> Method1Async() { return Task.Run(() => { /*Task.Yield(); */return new Type1(); }); }
    private static Task<Type2> Method2Async() { return Task.Run(() => { /*Task.Yield(); */return new Type2(); }); }
-
+   //A Async Task method. 
    private static async Task<String> MyMethodAsync(Int32 argument) {
       Int32 local = argument;
       try {
@@ -249,6 +250,8 @@ internal static class AsyncFuncCodeTransformation {
 
    // AsyncStateMachine attribute indicates an async method (good for tools using reflection); 
    // the type indicates which structure implements the state machine
+
+   // How the state machine is executed when invoking the async method?
    [DebuggerStepThrough, AsyncStateMachine(typeof(StateMachine))]
    private static Task<String> MyMethodAsync_ActualImplementation(Int32 argument) {
       // Create state machine instance & initialize it
@@ -283,6 +286,7 @@ internal static class AsyncFuncCodeTransformation {
       // There is 1 field per awaiter type.
       // Only 1 of these fields is important at any time. That field refers 
       // to the most recently executed await that is completing asynchronously:
+      // Here are two TaskAwaiters
       private TaskAwaiter<Type1> m_awaiterType1;
       private TaskAwaiter<Type2> m_awaiterType2;
 
@@ -305,12 +309,14 @@ internal static class AsyncFuncCodeTransformation {
                switch (m_state) {
                   case -1: // Start execution of code in 'try'
                      // Call Method1Async and get its awaiter
+                     // Return an awaiter instance.
                      awaiterType1 = Method1Async().GetAwaiter();
                      if (!awaiterType1.IsCompleted) {
                         m_state = 0;                   // 'Method1Async' is completing asynchronously
                         m_awaiterType1 = awaiterType1; // Save the awaiter for when we come back
 
                         // Tell awaiter to call MoveNext when operation completes
+                        // An interface of IAsyncStateMachine
                         m_builder.AwaitUnsafeOnCompleted(ref awaiterType1, ref this);
                         // The line above invokes awaiterType1's OnCompleted which approximately 
                         // calls ContinueWith(t => MoveNext()) on the Task being awaited.
