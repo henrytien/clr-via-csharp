@@ -48,12 +48,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ch29-1-PrimitveThreadSync.cs" />
-    <Compile Include="..\runtime\src\mono\mono\tests\spinlock-stress.cs">
-      <Link>spinlock-stress.cs</Link>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\runtime\src\mono\mono\tests\spinlock-stress.cs">
+      <Link>spinlock-stress.cs</Link>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

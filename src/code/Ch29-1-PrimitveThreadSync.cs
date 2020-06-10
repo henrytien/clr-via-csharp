@@ -7,12 +7,12 @@ using System.Threading;
 using System.Threading.Tasks;
 
 public static class PrimitveThreadSync {
-   public static void Main1() {
+   public static void Main() {
         //OptimizedAway();
         //StrangeBehavior.Go();
         //AsyncCoordinatorDemo.Go();
-        LockComparison.Go();
-        //RegisteredWaitHandleDemo.Go();
+        //LockComparison.Go();
+        RegisteredWaitHandleDemo.Go();
     }
 
    private static void OptimizedAway() {
@@ -401,6 +401,7 @@ internal static class RegisteredWaitHandleDemo {
       AutoResetEvent are = new AutoResetEvent(false);
 
       // Tell the thread pool to wait on the AutoResetEvent
+      // RegisteredWaitHandle 
       RegisteredWaitHandle rwh = ThreadPool.RegisterWaitForSingleObject(
          are,             // Wait on this AutoResetEvent
          EventOperation,  // When available, call the EventOperation method
@@ -408,12 +409,13 @@ internal static class RegisteredWaitHandleDemo {
          5000,            // Wait 5 seconds for the event to become true
          false);          // Call EventOperation everytime the event is true
 
-      // Start our loop
+      // Start our loop and set AutoResetEvent event.
       Char operation = (Char)0;
       while (operation != 'Q') {
          Console.WriteLine("S=Signal, Q=Quit?");
          operation = Char.ToUpper(Console.ReadKey(true).KeyChar);
-         if (operation == 'S') are.Set(); // User want to set the event
+         if (operation == 'S')
+            are.Set(); // User want to set the event
       }
 
       // Tell the thread pool to stop waiting on the event
