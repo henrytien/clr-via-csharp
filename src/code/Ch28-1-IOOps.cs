@@ -27,9 +27,9 @@ public static class IOOps {
         //AsyncFuncCodeTransformation.Go();
         //TaskLogger.Go().Wait();
         //EventAwaiterDemo.Go();
-        Features.Go();
+        //Features.Go();
         //GuiDeadlockWindow.Go();
-        //Cancellation.Go().Wait();
+        Cancellation.Go().Wait();
         //ThreadIO.Go();
         //var s = AwaitWebClient(new Uri("https://google.com/")).Result;
     }
@@ -614,8 +614,9 @@ internal static class Cancellation {
    public static async Task Go() {
       // Create a CancellationTokenSource that cancels itself after # milliseconds
       var cts = new CancellationTokenSource(15000); // To cancel sooner, call cts.Cancel()
+      // CancellationTokenSource have a protine, the name is Token.
       var ct = cts.Token;
-
+      cts.Cancel();
       try {
          await Task.Delay(10000).WithCancellation(ct);
          Console.WriteLine("Task completed");
