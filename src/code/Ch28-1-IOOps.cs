@@ -25,9 +25,9 @@ public static class IOOps {
    public static void Main() {
         //PipeDemo.Go().Wait();
         //AsyncFuncCodeTransformation.Go();
-        TaskLogger.Go().Wait();
+        //TaskLogger.Go().Wait();
         //EventAwaiterDemo.Go();
-        //Features.Go();
+        Features.Go();
         //GuiDeadlockWindow.Go();
         //Cancellation.Go().Wait();
         //ThreadIO.Go();
@@ -537,6 +537,7 @@ internal static class Features {
    }
 
    private static void AsyncLambdaExpression() {
+      // Task.Run(async() => {}) That's lambda expression with async.
       Task.Run(async () => {
          // TODO: Do intensive compute-bound processing here...
 
