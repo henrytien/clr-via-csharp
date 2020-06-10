@@ -7,11 +7,11 @@ using System.Threading;
 using System.Threading.Tasks;
 
 public static class PrimitveThreadSync {
-   public static void Main() {
+   public static void Main1() {
         //OptimizedAway();
         //StrangeBehavior.Go();
-        AsyncCoordinatorDemo.Go();
-        //LockComparison.Go();
+        //AsyncCoordinatorDemo.Go();
+        LockComparison.Go();
         //RegisteredWaitHandleDemo.Go();
     }
 
@@ -317,7 +317,7 @@ internal static class LockComparison {
 
    [MethodImpl(MethodImplOptions.NoInlining)]
    private static void M() { }
-
+   // SimpleSpinLock is a value type.
    internal struct SimpleSpinLock {
       private Int32 m_ResourceInUse; // 0=false (default), 1=true
 
