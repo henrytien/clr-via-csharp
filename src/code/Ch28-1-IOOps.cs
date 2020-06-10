@@ -25,13 +25,13 @@ public static class IOOps {
    public static void Main() {
         //PipeDemo.Go().Wait();
         //AsyncFuncCodeTransformation.Go();
-        //TaskLogger.Go().Wait();
+        TaskLogger.Go().Wait();
         //EventAwaiterDemo.Go();
         //Features.Go();
         //GuiDeadlockWindow.Go();
         //Cancellation.Go().Wait();
         //ThreadIO.Go();
-        var s = AwaitWebClient(new Uri("https://google.com/")).Result;
+        //var s = AwaitWebClient(new Uri("https://google.com/")).Result;
     }
 
    private static async Task<String> AwaitWebClient(Uri uri) {
@@ -394,6 +394,7 @@ internal static class AsyncFuncCodeTransformation {
 
 public static class TaskLogger {
    public static async Task Go() {
+   //A async method, so you can invoke wait method.
 #if DEBUG
       // Using TaskLogger incurs a memory and performance hit; so turn it on in debug builds
       TaskLogger.LogLevel = TaskLogger.TaskLogLevel.Pending;
@@ -408,8 +409,10 @@ public static class TaskLogger {
 
       try {
          // Wait for all tasks but cancel after 3 seconds; only 1 task above should complete in time
+         // CancellationTokenSource have three constructors, one of is Int32 means that
+         // a millionsecondDely, another one is TimeSpan.
          await Task.WhenAll(tasks).
-            WithCancellation(new CancellationTokenSource(3000).Token);
+            WithCancellation(new CancellationTokenSource(3000).Token); // Extension method with new argument is passed.
       }
       catch (OperationCanceledException) { }
 
@@ -644,7 +647,8 @@ internal static class Cancellation {
    // A async with extension method.
    public static async Task WithCancellation(this Task task, CancellationToken ct) {
       var tcs = new TaskCompletionSource<Void>();
-      using (ct.Register(t => ((TaskCompletionSource<Void>)t).TrySetResult(default(Void)), tcs)) {
+    // Register method type is CancellationTokenRegistration and using expression.
+    using (ct.Register(t => ((TaskCompletionSource<Void>)t).TrySetResult(default(Void)), tcs)) {
          if (await Task.WhenAny(task, tcs.Task) == tcs.Task) ct.ThrowIfCancellationRequested();
       }
       await task;          // If failure, ensures 1st inner exception gets thrown instead of AggregateException
