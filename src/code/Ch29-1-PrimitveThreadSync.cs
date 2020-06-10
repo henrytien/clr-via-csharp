@@ -10,9 +10,9 @@ public static class PrimitveThreadSync {
    public static void Main() {
         //OptimizedAway();
         //StrangeBehavior.Go();
-        //AsyncCoordinatorDemo.Go();
+        AsyncCoordinatorDemo.Go();
         //LockComparison.Go();
-        RegisteredWaitHandleDemo.Go();
+        //RegisteredWaitHandleDemo.Go();
     }
 
    private static void OptimizedAway() {
@@ -210,6 +210,7 @@ internal static class AsyncCoordinatorDemo {
    };
 
    private sealed class AsyncCoordinator {
+      // The m_opCount must to be 1 not 0.
       private Int32 m_opCount = 1;        // Decremented when AllBegun calls JustEnded
       private Int32 m_statusReported = 0; // 0=false, 1=true
       private Action<CoordinationStatus> m_callback;
@@ -218,11 +219,16 @@ internal static class AsyncCoordinatorDemo {
       // This method MUST be called BEFORE initiating an operation
       // Interlocked method.
       public void AboutToBegin(Int32 opsToAdd = 1) {
-         Interlocked.Add(ref m_opCount, opsToAdd);
+         // Interlocked.Add() return an int value.
+         var res = Interlocked.Add(ref m_opCount, opsToAdd);
+         // You can look here the res is equal to m_opCount
+         Console.WriteLine("res:{0} m_opCount:{1} opsToAdd:{2}", res, m_opCount, opsToAdd);
+
       }
 
       // This method MUST be called AFTER an operations result has been processed
       public void JustEnded() {
+         // Atomic decrement one. 
          if (Interlocked.Decrement(ref m_opCount) == 0)
             ReportStatus(CoordinationStatus.AllDone);
       }
@@ -251,6 +257,7 @@ internal static class AsyncCoordinatorDemo {
          }
 
          // If status has never been reported, report it; else ignore it
+         // Interlocked.Exchange parameter supported type of T. but here is int.
          if (Interlocked.Exchange(ref m_statusReported, 1) == 0)
             m_callback(status);
       }
