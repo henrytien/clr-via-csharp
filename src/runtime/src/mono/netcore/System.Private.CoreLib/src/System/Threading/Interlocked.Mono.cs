@@ -18,6 +18,13 @@ namespace System.Threading
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         private static extern void CompareExchange(ref object? location1, ref object? value, ref object? comparand, [NotNullIfNotNull("location1")] ref object? result);
 
+        /// <summary>
+		/// ComareExchange 
+		/// </summary>
+		/// <param name="location1"></param>
+		/// <param name="value"></param>
+		/// <param name="comparand"></param>
+		/// <returns></returns>
         [Intrinsic]
         [return: NotNullIfNotNull("location1")]
         public static object? CompareExchange(ref object? location1, object? value, object? comparand)
