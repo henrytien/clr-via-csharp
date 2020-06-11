@@ -315,7 +315,9 @@ The easiest way to access the System Monitor control is to run PerfMon.exe.
 ## Recommendations
 
 - [Managed-threading-best-practices](https://docs.microsoft.com/en-us/dotnet/standard/threading/managed-threading-best-practices#general-recommendations) 
-- [Thousands of Threads and Blocking I/O](https://www.slideshare.net/e456/tyma-paulmultithreaded1)
+- [Thousands of Threads and Blocking I/O](https://www.slideshare.net/e456/tyma-paulmultithreaded1) 
+- [The C10K problem](http://www.kegel.com/c10k.html)
+- [IO Processing](https://flylib.com/books/en/4.491.1.85/1/) 
 
 ## Questions
 
@@ -325,6 +327,7 @@ The easiest way to access the System Monitor control is to run PerfMon.exe.
 
 - [Task vs. TaskCompletionSource in C#](https://www.pluralsight.com/guides/task-taskcompletion-source-csharp) 
 - [Is the C# static constructor thread safe?](https://stackoverflow.com/questions/7095/is-the-c-sharp-static-constructor-thread-safe) 
+- [Volatile vs. Interlocked vs. lock](https://stackoverflow.com/questions/154551/volatile-vs-interlocked-vs-lock)
 
 # Reference
 
