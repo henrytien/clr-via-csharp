@@ -308,7 +308,23 @@ The easiest way to access the System Monitor control is to run PerfMon.exe.
 48. **What is Serialization?**
 49. **What are the types of Serialization?** 
 
-[Answers are here](https://www.softwaretestinghelp.com/c-sharp-interview-questions/)
+[Answers are here](https://www.softwaretestinghelp.com/c-sharp-interview-questions/) 
+
+
+
+## Recommendations
+
+- [Managed-threading-best-practices](https://docs.microsoft.com/en-us/dotnet/standard/threading/managed-threading-best-practices#general-recommendations) 
+- [Thousands of Threads and Blocking I/O](https://www.slideshare.net/e456/tyma-paulmultithreaded1)
+
+## Questions
+
+- [C++ Vs. C# - What’s the Difference?](https://www.guru99.com/cpp-vs-c-sharp.html)
+
+## Awesome Questions
+
+- [Task vs. TaskCompletionSource in C#](https://www.pluralsight.com/guides/task-taskcompletion-source-csharp) 
+- [Is the C# static constructor thread safe?](https://stackoverflow.com/questions/7095/is-the-c-sharp-static-constructor-thread-safe) 
 
 # Reference
 
@@ -319,6 +335,8 @@ The easiest way to access the System Monitor control is to run PerfMon.exe.
 - [C# documentation](https://docs.microsoft.com/en-us/dotnet/csharp/)
 
   Learn how to write any application using the C# programming language on the .NET platform.
+  
+- [StackOverflow](https://stackoverflow.com/search?tab=votes&q=C%23%20%5bmultithreading%5d](https://stackoverflow.com/search?tab=votes&q=C%23 [multithreading]))
 
 
 
