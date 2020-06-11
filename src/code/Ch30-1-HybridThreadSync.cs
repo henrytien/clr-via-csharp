@@ -8,9 +8,9 @@ using System.Globalization;
 
 public static class HybridThreadSync {
    public static void Main() {
-        HybridLocks.Go();
+        //HybridLocks.Go();
         //Singletons.Go();
-        //AsyncSynchronization.Go();
+        AsyncSynchronization.Go();
         //BlockingCollectionDemo.Go();
         //Console.ReadLine();
     }
@@ -131,6 +131,7 @@ internal static class HybridLocks {
 
       public void Enter() {
          // If the calling thread already owns this lock, increment the recursion count and return
+         // Check the threadId
          Int32 threadId = Thread.CurrentThread.ManagedThreadId;
          if (threadId == m_owningThreadId) { m_recursion++; return; }
 
@@ -541,6 +542,7 @@ internal static class Singletons {
 
    public static void Go() {
       // S value is ThreadSafetyMode={}, IsValueCreated=True, IsValueFaulted=False, Value=10:27:35 AM
+      // Lazy<T>
       Lazy<String> s = new Lazy<String>(() => DateTime.Now.ToLongTimeString(), true);
       Console.WriteLine(s.IsValueCreated);   // false
       Console.WriteLine(s.Value);                  // Lambda is invoked now
@@ -618,9 +620,9 @@ internal static class ConditionVariables {
 
 internal static class AsyncSynchronization {
    public static void Go() {
-        SemaphoreSlimDemo();
-        ConcurrentExclusiveSchedulerDemo();
-      OneManyDemo();
+        //SemaphoreSlimDemo();
+        //ConcurrentExclusiveSchedulerDemo();
+      OneManyDemo(); // How to understand this demo?
    }
 
    private static void SemaphoreSlimDemo() {
@@ -640,6 +642,7 @@ internal static class AsyncSynchronization {
       // Execute whatever code you want here...
       Console.WriteLine("ThreadID={0}, OpID={1}, await for {2} access",
          Environment.CurrentManagedThreadId, operation, "exclusive");
+      // asyncLock.WaitAsync return a Task.
       await asyncLock.WaitAsync();     // Request exclusive access to a resource via its lock
       // When we get here, we know that no other thread his accessing the resource
       // Access the resource (exclusively)...
@@ -755,7 +758,8 @@ internal static class AsyncSynchronization {
    public sealed class AsyncOneManyLock {
       #region Lock code
       private SpinLock m_lock = new SpinLock(true);   // Don't use readonly with a SpinLock
-      private void Lock() { Boolean taken = false; m_lock.Enter(ref taken); }
+      // Lock() wapper by a SpinLock with a parameter bool value.
+      private void Lock() { Boolean taken = false; m_lock.Enter(ref taken); }  
       private void Unlock() { m_lock.Exit(); }
       #endregion
 
@@ -774,6 +778,7 @@ internal static class AsyncSynchronization {
       private readonly Task m_noContentionAccessGranter;
 
       // Each waiting writers wakes up via their own TaskCompletionSource queued here
+      // Queue have value with TaskCompletionSource<Object>> items.
       private readonly Queue<TaskCompletionSource<Object>> m_qWaitingWriters =
          new Queue<TaskCompletionSource<Object>>();
 
