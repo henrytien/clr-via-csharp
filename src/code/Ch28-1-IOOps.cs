@@ -46,7 +46,7 @@ public static class IOOps {
       wc.DownloadStringCompleted += (s, e) => {
          if (e.Cancelled) tcs.SetCanceled();  // Easy to use.
          else if (e.Error != null) tcs.SetException(e.Error);
-         else tcs.SetResult(e.Result); // Here is that's why to use TaskCompletionSource.
+         else tcs.SetResult(e.Result); // Here is that's why we use TaskCompletionSource.
       };
 
       // Start the asynchronous operation
