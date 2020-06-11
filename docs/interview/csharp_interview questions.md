@@ -57,7 +57,8 @@
 
 ## Recommendations
 
-- [managed-threading-best-practices](https://docs.microsoft.com/en-us/dotnet/standard/threading/managed-threading-best-practices#general-recommendations)
+- [managed-threading-best-practices](https://docs.microsoft.com/en-us/dotnet/standard/threading/managed-threading-best-practices#general-recommendations) 
+- [Thousands of Threads and Blocking I/O](https://www.slideshare.net/e456/tyma-paulmultithreaded1)
 
 ## Questions
 
