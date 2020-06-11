@@ -57,7 +57,7 @@
 
 ## Recommendations
 
-- [managed-threading-best-practices](https://docs.microsoft.com/en-us/dotnet/standard/threading/managed-threading-best-practices#general-recommendations) 
+- [Managed-threading-best-practices](https://docs.microsoft.com/en-us/dotnet/standard/threading/managed-threading-best-practices#general-recommendations) 
 - [Thousands of Threads and Blocking I/O](https://www.slideshare.net/e456/tyma-paulmultithreaded1)
 
 ## Questions
@@ -77,5 +77,6 @@
 
 ## Reference
 
-
+1. [StackOverflow]([https://stackoverflow.com/search?tab=votes&q=C%23%20%5bmultithreading%5d](https://stackoverflow.com/search?tab=votes&q=C%23 [multithreading]))
+2. 
 
