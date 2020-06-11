@@ -55,15 +55,26 @@
 
 
 
+## Recommendations
+
+- [managed-threading-best-practices](https://docs.microsoft.com/en-us/dotnet/standard/threading/managed-threading-best-practices#general-recommendations)
+
+## Questions
+
+- [C++ Vs. C# - What’s the Difference?](https://www.guru99.com/cpp-vs-c-sharp.html)
+
 ## Awesome Questions
 
-1. **Task vs. TaskCompletionSource in C#?**
+- [Task vs. TaskCompletionSource in C#](https://www.pluralsight.com/guides/task-taskcompletion-source-csharp) 
+- [Is the C# static constructor thread safe?](https://stackoverflow.com/questions/7095/is-the-c-sharp-static-constructor-thread-safe) 
 
-   
+
+
+
 
 
 
 ## Reference
 
-- [Task vs. TaskCompletionSource in C#](https://www.pluralsight.com/guides/task-taskcompletion-source-csharp) 
+
 
