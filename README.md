@@ -318,6 +318,8 @@ The easiest way to access the System Monitor control is to run PerfMon.exe.
 - [Thousands of Threads and Blocking I/O](https://www.slideshare.net/e456/tyma-paulmultithreaded1) 
 - [The C10K problem](http://www.kegel.com/c10k.html)
 - [IO Processing](https://flylib.com/books/en/4.491.1.85/1/) 
+- [High-Performance Server Architecture](http://pl.atyp.us/content/tech/servers.html) 
+- [Understanding reactor pattern with java](http://kasunpanorama.blogspot.com/2015/04/understanding-reactor-pattern-with-java.html)
 
 ## Questions
 
@@ -339,7 +341,7 @@ The easiest way to access the System Monitor control is to run PerfMon.exe.
 
   Learn how to write any application using the C# programming language on the .NET platform.
   
-- [StackOverflow](https://stackoverflow.com/search?tab=votes&q=C%23%20%5bmultithreading%5d](https://stackoverflow.com/search?tab=votes&q=C%23 [multithreading]))
+- [StackOverflow](https://stackoverflow.com/)
 
 
 
