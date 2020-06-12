@@ -5055,6 +5055,7 @@ namespace System.Threading.Tasks
         /// <summary>Creates a <see cref="Task"/> that's completed due to cancellation with the specified token.</summary>
         /// <param name="cancellationToken">The token with which to complete the task.</param>
         /// <returns>The canceled task.</returns>
+		/// Cancel function
         public static Task FromCanceled(CancellationToken cancellationToken)
         {
             if (!cancellationToken.IsCancellationRequested)
@@ -5195,6 +5196,9 @@ namespace System.Threading.Tasks
         /// <exception cref="System.ObjectDisposedException">
         /// The CancellationTokenSource associated with <paramref name="cancellationToken"/> was disposed.
         /// </exception>
+		/// <remarks>
+		/// Task Run()
+		/// </remarks>
         public static Task Run(Func<Task?> function, CancellationToken cancellationToken)
         {
             // Check arguments
