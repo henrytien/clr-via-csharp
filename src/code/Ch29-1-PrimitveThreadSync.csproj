@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Ch29-1-PrimitveThreadSync.cs" />
     <Compile Include="mutex.cs" />
+    <Compile Include="semaphoreslim.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

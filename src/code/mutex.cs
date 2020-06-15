@@ -7,7 +7,7 @@ using System.Threading;
 
 public class MutexTest
 {
-    public static void Main()
+    public static void Main2()
     {
         //SomeClass.Go();
         Task task = Task.Run(() => SomeClass.Go());
