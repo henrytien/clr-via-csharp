@@ -324,6 +324,7 @@ The easiest way to access the System Monitor control is to run PerfMon.exe.
 ## Questions
 
 - [C++ Vs. C# - What’s the Difference?](https://www.guru99.com/cpp-vs-c-sharp.html)
+- [Difference between semaphore and semaphoreslim?](https://docs.microsoft.com/en-us/dotnet/standard/threading/semaphore-and-semaphoreslim)
 
 ## Awesome Questions
 
