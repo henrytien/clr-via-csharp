@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Threading;
 
 
+
 public class MutexTest
 {
     public static void Main()
@@ -42,6 +43,56 @@ internal class SomeClass
     public void Dispose() { m_lock.Dispose(); }
 }
 
+
+internal sealed class RecursiveAutoResetEventTest
+{
+    public void Go()
+    {
+        Enter();
+    }
+    // This class is effective than SomeClass, becuase the thread own and recursion code are
+    // manage code. Only first get a AutoResetEvent or give up the last one.
+    private AutoResetEvent m_lock = new AutoResetEvent(true);
+    private Int32 m_owningThreadId = 0;
+    private Int32 m_orecurisonCount = 0;
+
+    public  void Enter()
+    {
+        Int32 currentThreadId = Thread.CurrentThread.ManagedThreadId;
+
+        if(m_owningThreadId == currentThreadId)
+        {
+            m_orecurisonCount++;
+            return;
+        }
+
+        // The calling thread doesn't have own lock, wait it 
+        m_lock.WaitOne();
+
+        // The calling thead now own the lock, intialize the owning thread ID and recursion count
+        m_owningThreadId = currentThreadId;
+        m_orecurisonCount--;
+    }
+
+    public void Leave()
+    {
+        if(m_owningThreadId != Thread.CurrentThread.ManagedThreadId)
+        {
+            throw new InvalidCastException();
+        }
+
+        // Subtract 1 from recurison count
+        if(-- m_orecurisonCount == 0)
+        {
+            // If the recursion count is zero, then no thread owns the lock
+            m_owningThreadId = 0;
+            m_lock.Set();  // Wait up one thead, if have
+        }
+    }
+
+    public void Dispose() { m_lock.Dispose(); }
+
+}
 
 
 
