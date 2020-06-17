@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Globalization;
 
 public static class HybridThreadSync {
-   public static void Main() {
+   public static void Main1() {
         //HybridLocks.Go();
         //Singletons.Go();
         AsyncSynchronization.Go();

@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ch30-1-HybridThreadSync.cs" />
+    <Compile Include="TestLock.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
