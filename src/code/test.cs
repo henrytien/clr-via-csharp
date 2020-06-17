@@ -10,7 +10,7 @@ public class Test
     {
         //AsyncCoordinatorDemo.Go();
         LockFreeStack.Go();
-        
+
     }
 
     internal static class AsyncCoordinatorDemo
@@ -223,7 +223,7 @@ public class Test
             {
                 head = m_head;
                 if (head == null) return false;
-                if(Interlocked.CompareExchange(ref m_head, head.Next, head) == head)
+                if (Interlocked.CompareExchange(ref m_head, head.Next, head) == head)
                 {
                     result = head.Value;
                     return true;
@@ -234,8 +234,22 @@ public class Test
         }
     }
 
+    // Automatic method with Interlocked.CompareExchange.
+    public static Int32 Maximum(ref Int32 target, Int32 value)
+    {
+        Int32 currentVal = target, startVal, desireVal;
 
+        do
+        {
+            startVal = currentVal;
 
+            desireVal = Math.Max(startVal, value);
 
+            currentVal = Interlocked.CompareExchange(ref target, desireVal, startVal);
+
+        } while (startVal != currentVal); // If not equal, do again, because maybe changed by other thread.
+
+        return desireVal;
+    }
 }
 
