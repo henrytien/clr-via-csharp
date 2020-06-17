@@ -8,7 +8,9 @@ public class Test
 {
     public static void Main()
     {
-        AsyncCoordinatorDemo.Go();
+        //AsyncCoordinatorDemo.Go();
+        LockFreeStack.Go();
+        
     }
 
     internal static class AsyncCoordinatorDemo
@@ -148,5 +150,92 @@ public class Test
             }
         }
     }
+
+    internal struct SimpleSpinLock
+    {
+        private Int32 m_ResourceInUse;  // 0=false, 1=true
+        public void Enter()
+        {
+            while (true)
+            {
+                if (Interlocked.Exchange(ref m_ResourceInUse, 1) == 0) return;
+            }
+        }
+
+        public void Leave()
+        {
+            Volatile.Write(ref m_ResourceInUse, 0);
+        }
+    }
+
+    public sealed class SomeResource
+    {
+        private SimpleSpinLock m_sl = new SimpleSpinLock();
+
+        public void AccessResource()
+        {
+            m_sl.Enter();
+            m_sl.Leave();
+        }
+    }
+
+    internal static class LockFreeStack
+    {
+        public static void Go()
+        {
+            lockFreeStack<Int32> lockFreeStack = new lockFreeStack<Int32>();
+            lockFreeStack.Push(3);
+            lockFreeStack.Push(4);
+            lockFreeStack.Push(5);
+
+            Int32 res;
+            lockFreeStack.TryPop(out res);
+            Console.WriteLine("Pop a item is {0}.", res);
+        }
+    }
+
+    public class lockFreeStack<T>
+    {
+        private volatile Node m_head;
+        private class Node { public Node Next; public T Value; }
+
+        public void Push(T item)
+        {
+            var spin = new SpinWait();
+            Node node = new Node { Value = item }, head;
+            while (true)
+            {
+                head = m_head;
+                node.Next = head;
+                if (Interlocked.CompareExchange(ref m_head, node, head) == head)
+                    break;
+                spin.SpinOnce();
+            }
+        }
+
+        public bool TryPop(out T result)
+        {
+            result = default(T);
+            var spin = new SpinWait();
+
+            Node head;
+            while (true)
+            {
+                head = m_head;
+                if (head == null) return false;
+                if(Interlocked.CompareExchange(ref m_head, head.Next, head) == head)
+                {
+                    result = head.Value;
+                    return true;
+                }
+                spin.SpinOnce();
+            }
+
+        }
+    }
+
+
+
+
 }
 
