@@ -2,7 +2,10 @@
 using System.Threading;
 using System.Net.Http;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
+using System.Diagnostics;
 
 public class Test
 {
@@ -250,6 +253,51 @@ public class Test
         } while (startVal != currentVal); // If not equal, do again, because maybe changed by other thread.
 
         return desireVal;
+    }
+
+
+    internal sealed class SimpleWaitLock : IDisposable
+    {
+        private readonly AutoResetEvent autoResetEvent;
+
+        public SimpleWaitLock()
+        {
+            autoResetEvent = new AutoResetEvent(true); // Initially free
+        }
+
+        public void Enter()
+        {
+            autoResetEvent.WaitOne();
+        }
+
+        public void Leave()
+        {
+            autoResetEvent.Set();
+        }
+
+        public void Dispose() { autoResetEvent.Dispose(); }
+    }
+
+    public sealed class SimpleWaitLockWithSemaphpore : IDisposable
+    {
+        private Semaphore semaphore;
+        public void SimpleWaitLockWithSemaphore(Int32 maxConcurrent)
+        {
+            semaphore = new Semaphore(maxConcurrent, maxConcurrent);
+        }
+
+        public void Enter()
+        {
+            semaphore.WaitOne();
+        }
+
+        public void Leave()
+        {
+            semaphore.Release();
+        }
+
+        // Here is call close method.
+        public void Dispose() { semaphore.Close(); }
     }
 }
 
