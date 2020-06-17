@@ -8,7 +8,7 @@ public class Example
     // A padding interval to make the output more olderly.
     private static int padding;
 
-    public static void Main()
+    public static void Main1()
     {
         // Create the semaphere.
         semaphore = new SemaphoreSlim(0, 3);
