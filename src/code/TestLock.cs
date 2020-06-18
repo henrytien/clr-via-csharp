@@ -4,16 +4,18 @@ using System;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Collections.Concurrent;
 
 
 internal class TestLock
 {
     public static void Main()
     {
-        SimpleHybirdLock.Go();
-        LazyDemo.Go();
-        LazyDemo.Go1();
-        SynchronizedQueue<Int32>.Go();
+        //SimpleHybirdLock.Go();
+        //LazyDemo.Go();
+        //LazyDemo.Go1();
+        //SynchronizedQueueTest<Int32>.Go();
+        ConsumerModel.Go();
     }
 }
 
@@ -339,7 +341,7 @@ public sealed class ConditionVariablePattern
     }
 }
 
-internal sealed class SynchronizedQueue<T>
+internal sealed class SynchronizedQueueTest<T>
 {
     private readonly Object m_lock = new Object();
     private readonly Queue<T> m_queue = new Queue<T>();
@@ -373,7 +375,7 @@ internal sealed class SynchronizedQueue<T>
 
     public static void Go()
     {
-        var queue = new SynchronizedQueue<Int32>();
+        var queue = new SynchronizedQueueTest<Int32>();
         queue.Enqueue(520);
         queue.Enqueue(520);
         queue.Enqueue(521);
@@ -469,7 +471,7 @@ public sealed class AsyncOneManyLock
                 AddReaders(m_numWaitingReader);
                 m_numWaitingReader = 0;
                 accessGranter = m_waitingReadersSignal;
-                m_waitingReadersSignal = new TaskCompletionSource<object>;
+                m_waitingReadersSignal = new TaskCompletionSource<object>();
             }
         }
         Unlock();
@@ -479,8 +481,38 @@ public sealed class AsyncOneManyLock
     private static async Task AccessResourceViaAsyncSynchronization(
         AsyncOneManyLock asyncLock)
     {
-        await asyncLock.AcquireAsync(OneManyMode.Shared);
+        //await asyncLock.AcquireAsync(OneManyMode.Shared);
 
         asyncLock.Release();
+    }
+}
+
+internal sealed class ConsumerModel
+{
+    public static void Go()
+    {
+        var b1 = new BlockingCollection<Int32>(new ConcurrentQueue<Int32>());
+
+        ThreadPool.QueueUserWorkItem(ConsumeItems, b1);
+
+        for(Int32 item = 0; item < 5; item++)
+        {
+            Console.WriteLine("Producting: " + item);
+            b1.Add(item);
+        }
+
+        b1.CompleteAdding();
+        Console.ReadLine();
+    }
+
+    private static void ConsumeItems(Object o)
+    {
+        var b1 = (BlockingCollection<Int32>)o;
+        foreach( var item in b1.GetConsumingEnumerable())
+        {
+            Console.WriteLine("Consuming: " + item);
+
+        }
+        Console.WriteLine("All items have been consumed.");
     }
 }

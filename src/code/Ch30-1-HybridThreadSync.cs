@@ -10,8 +10,8 @@ public static class HybridThreadSync {
    public static void Main1() {
         //HybridLocks.Go();
         //Singletons.Go();
-        AsyncSynchronization.Go();
-        //BlockingCollectionDemo.Go();
+        //AsyncSynchronization.Go();
+        BlockingCollectionDemo.Go();
         //Console.ReadLine();
     }
 }
