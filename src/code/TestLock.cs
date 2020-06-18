@@ -8,6 +8,7 @@ internal class TestLock
     public static void Main()
     {
         SimpleHybirdLock.Go();
+        LazyDemo.Go();
     }
 }
 
@@ -23,7 +24,7 @@ internal sealed class SimpleHybirdLock : IDisposable
         hybirdLock.Enter();
         x++;
         hybirdLock.Leave();
-        Stopwatch sw =  Stopwatch.StartNew();
+        Stopwatch sw = Stopwatch.StartNew();
         for (int i = 0; i < iterations; i++)
         {
             hybirdLock.Enter();
@@ -39,7 +40,7 @@ internal sealed class SimpleHybirdLock : IDisposable
 
     public void Enter()
     {
-        if(Interlocked.Increment(ref m_waiters) == 1)
+        if (Interlocked.Increment(ref m_waiters) == 1)
         {
             return;
         }
@@ -49,7 +50,7 @@ internal sealed class SimpleHybirdLock : IDisposable
 
     public void Leave()
     {
-        if(Interlocked.Decrement(ref m_waiters) == 0)
+        if (Interlocked.Decrement(ref m_waiters) == 0)
         {
             return;
         }
@@ -73,10 +74,10 @@ internal sealed class AnotherHybridLock : IDisposable
     public void Enter()
     {
         Int32 threadId = Thread.CurrentThread.ManagedThreadId;
-        if(threadId == m_owningThreadId) { m_recursion++; return; }
+        if (threadId == m_owningThreadId) { m_recursion++; return; }
 
         SpinWait spinWait = new SpinWait();
-        for(Int32 spinCount = 0; spinCount < m_spincount; spinCount++)
+        for (Int32 spinCount = 0; spinCount < m_spincount; spinCount++)
         {
             if (Interlocked.CompareExchange(ref m_waiters, 1, 0) == 0) goto GotLock;
 
@@ -84,7 +85,7 @@ internal sealed class AnotherHybridLock : IDisposable
             spinWait.SpinOnce();
         }
         // Try one more time.
-        if(Interlocked.Increment(ref m_waiters) > 1)
+        if (Interlocked.Increment(ref m_waiters) > 1)
         {
             m_waiterLock.WaitOne();
         }
@@ -96,7 +97,7 @@ internal sealed class AnotherHybridLock : IDisposable
     public void Leave()
     {
         Int32 threadId = Thread.CurrentThread.ManagedThreadId;
-        if(threadId != m_owningThreadId)
+        if (threadId != m_owningThreadId)
         {
             throw new SynchronizationLockException("Lock not owned by calling thread.");
         }
@@ -105,7 +106,7 @@ internal sealed class AnotherHybridLock : IDisposable
 
         m_owningThreadId = 0;
 
-        if(Interlocked.Decrement(ref m_waiters) == 0)
+        if (Interlocked.Decrement(ref m_waiters) == 0)
         {
             return;
         }
@@ -209,7 +210,8 @@ internal sealed class Transaction
 
             public DateTime LastTransaction
             {
-                get {
+                get
+                {
                     m_lock.EnterReadLock();
                     DateTime temp = m_timeOfLastTrans;
                     m_lock.ExitWriteLock();
@@ -219,5 +221,73 @@ internal sealed class Transaction
 
             public void Dispose() { m_lock.Dispose(); }
         }
+    }
+}
+
+// 30.4 Double-Check Locking
+public sealed class Singleton
+{
+    private static Object s_lock = new object();
+
+    private static Singleton s_value = null;
+
+    private Singleton()
+    {
+        // Initialize code 
+    }
+
+    public static Singleton GetSingleton()
+    {
+        if (s_value != null) return s_value;
+
+        Monitor.Enter(s_lock);
+        if (s_value == null)
+        {
+            Singleton temp = new Singleton();
+            Volatile.Write(ref s_value, temp);
+        }
+        Monitor.Exit(s_lock);
+        return s_value;
+    }
+}
+
+internal sealed class SingletonV2
+{
+    private static SingletonV2 s_value = new SingletonV2();
+
+    private SingletonV2()
+    {
+
+    }
+
+    public static SingletonV2 GetSingletonV2() { return s_value; }
+}
+
+internal sealed class SingletonV3
+{
+    private static SingletonV3 s_value = null;
+    private SingletonV3() { }
+
+    public static SingletonV3 GetSingletonV3()
+    {
+        if (s_value != null) return s_value;
+        SingletonV3 temp = new SingletonV3();
+        Interlocked.CompareExchange(ref s_value, temp, null);
+
+        return s_value;
+    }
+}
+internal sealed class LazyDemo
+{
+    public static void Go()
+    {
+        Lazy<String> s = new Lazy<string>(() =>
+        DateTime.Now.ToLongTimeString(), true);
+
+        Console.WriteLine(s.IsValueCreated);
+        Console.WriteLine(s.Value);
+        Console.WriteLine(s.IsValueCreated);
+        Thread.Sleep(1000);
+        Console.WriteLine(s.Value);
     }
 }
