@@ -172,5 +172,52 @@ internal sealed class Transaction
                 return temp;
             }
         }
+
+        private void SomeMethod()
+        {
+            lock (this)
+            {
+
+            }
+        }
+
+        private void SomeMethod1()
+        {
+            Boolean lockTaken = false;
+            try
+            {
+                Monitor.Enter(this, ref lockTaken);
+            }
+            finally
+            {
+                if (lockTaken) Monitor.Exit(this);
+            }
+        }
+
+        internal sealed class Transaction : IDisposable
+        {
+            private readonly ReaderWriterLockSlim m_lock =
+                new ReaderWriterLockSlim(LockRecursionPolicy.NoRecursion);
+            private DateTime m_timeOfLastTrans;
+
+            public void PerformTransaction()
+            {
+                m_lock.EnterWriteLock();
+                m_timeOfLastTrans = DateTime.Now;
+                m_lock.ExitWriteLock();
+            }
+
+            public DateTime LastTransaction
+            {
+                get {
+                    m_lock.EnterReadLock();
+                    DateTime temp = m_timeOfLastTrans;
+                    m_lock.ExitWriteLock();
+                    return temp;
+                }
+            }
+
+            public void Dispose() { m_lock.Dispose(); }
+        }
     }
 }
