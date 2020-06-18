@@ -115,3 +115,62 @@ internal sealed class AnotherHybridLock : IDisposable
 
     public void Dispose() { m_waiterLock.Dispose(); }
 }
+
+internal sealed class Transaction
+{
+    private DateTime m_timeOfLastTrans;
+
+    public void PerformTransaction()
+    {
+        Monitor.Enter(this);
+
+        m_timeOfLastTrans = DateTime.Now;
+        Monitor.Exit(this);
+    }
+
+    public DateTime LastTransaction
+    {
+        get
+        {
+            Monitor.Enter(this);
+            // This code has shared access the data 
+            DateTime temp = m_timeOfLastTrans;
+            Monitor.Exit(this);
+            return temp;
+        }
+    }
+
+    public static void SomeMethod()
+    {
+        var t = new Transaction();
+        Monitor.Enter(t);
+        // ThreadPool will block until the thread call Monitor.Exit.
+        ThreadPool.QueueUserWorkItem(o => Console.WriteLine(t.LastTransaction));
+        Monitor.Exit(t);
+    }
+
+
+    internal sealed class TransactionPrivaeLock
+    {
+        private readonly Object m_lock = new object();
+        private DateTime m_timeOfLastTrans;
+
+        public void PerformTransaction()
+        {
+            Monitor.Enter(m_lock);
+            m_timeOfLastTrans = DateTime.Now;
+            Monitor.Exit(m_lock);
+        }
+
+        public DateTime LastTransaction
+        {
+            get
+            {
+                Monitor.Enter(m_lock);
+                DateTime temp = m_timeOfLastTrans;
+                Monitor.Exit(m_lock);
+                return temp;
+            }
+        }
+    }
+}
