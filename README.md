@@ -327,8 +327,9 @@ The easiest way to access the System Monitor control is to run PerfMon.exe.
 - [Difference between semaphore and semaphoreslim?](https://docs.microsoft.com/en-us/dotnet/standard/threading/semaphore-and-semaphoreslim)
 - [SpinWait vs Sleep waiting. Which one to use?](https://stackoverflow.com/questions/9719003/spinwait-vs-sleep-waiting-which-one-to-use) 
 - [Need to understand the usage of SemaphoreSlim?](https://stackoverflow.com/questions/20056727/need-to-understand-the-usage-of-semaphoreslim) 
-- [SpinWait vs Sleep waiting. Which one to use?](https://stackoverflow.com/questions/9719003/spinwait-vs-sleep-waiting-which-one-to-use) 
 - [How to “sleep” until timeout or cancellation is requested in .NET 4.0](https://stackoverflow.com/questions/18715099/how-to-sleep-until-timeout-or-cancellation-is-requested-in-net-4-0)
+- [Difference between decimal, float and double in .NET?](https://stackoverflow.com/questions/618535/difference-between-decimal-float-and-double-in-net)  
+- [What's the purpose of Thread.SpinWait method?](https://stackoverflow.com/questions/1091135/whats-the-purpose-of-thread-spinwait-method)
 
 ## Awesome Questions
 
@@ -336,7 +337,7 @@ The easiest way to access the System Monitor control is to run PerfMon.exe.
 - [Is the C# static constructor thread safe?](https://stackoverflow.com/questions/7095/is-the-c-sharp-static-constructor-thread-safe) 
 - [Volatile vs. Interlocked vs. lock](https://stackoverflow.com/questions/154551/volatile-vs-interlocked-vs-lock)
 
-# Reference
+# References
 
 - [awesome-dotnet](https://github.com/quozd/awesome-dotnet) 
 
