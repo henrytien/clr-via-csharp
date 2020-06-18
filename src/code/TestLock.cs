@@ -2,6 +2,8 @@
 using System.Threading;
 using System;
 using System.Diagnostics;
+using System.Collections.Generic;
+
 
 internal class TestLock
 {
@@ -10,6 +12,7 @@ internal class TestLock
         SimpleHybirdLock.Go();
         LazyDemo.Go();
         LazyDemo.Go1();
+        SynchronizedQueue<Int32>.Go();
     }
 }
 
@@ -303,5 +306,77 @@ internal sealed class LazyDemo
         string saying = null;
         LazyInitializer.EnsureInitialized(ref saying, () => "I love mj");
         Console.WriteLine(saying);
+    }
+}
+
+public sealed class ConditionVariablePattern
+{
+    private readonly Object m_lock = new object();
+    private Boolean m_condition = false;
+
+    public void Thread1()
+    {
+        Monitor.Enter(m_lock);
+
+        while (!m_condition)
+        {
+            Monitor.Wait(m_lock); // Temporarily release lock so other thread can change it.
+        }
+
+        Monitor.Exit(m_lock);
+    }
+
+    public void Thread2()
+    {
+        Monitor.Enter(m_lock);
+
+        m_condition = true;
+        // Monitor.Pulse(m_lock);
+        Monitor.PulseAll(m_lock); // Wake all waiter after lock is released.
+
+        Monitor.Exit(m_lock);
+    }
+}
+
+internal sealed class SynchronizedQueue<T>
+{
+    private readonly Object m_lock = new Object();
+    private readonly Queue<T> m_queue = new Queue<T>();
+
+    public void Enqueue(T item)
+    {
+        Monitor.Enter(m_lock);
+
+        m_queue.Enqueue(item);
+        Monitor.PulseAll(m_lock);
+        Monitor.Exit(m_lock);
+    }
+
+    public T Dequeue()
+    {
+        Monitor.Enter(m_lock);
+        while(m_queue.Count == 0)
+        {
+            Monitor.Wait(m_lock);
+        }
+
+        T item = m_queue.Dequeue();
+        Monitor.Exit(m_lock);
+        return item;
+    }
+
+    public Int32  Count()
+    {
+        return m_queue.Count;
+    }
+
+    public static void Go()
+    {
+        var queue = new SynchronizedQueue<Int32>();
+        queue.Enqueue(520);
+        queue.Enqueue(520);
+        queue.Enqueue(521);
+
+        Console.WriteLine("Dequeue {0} , Count {1}.", queue.Dequeue(), queue.Count());
     }
 }
