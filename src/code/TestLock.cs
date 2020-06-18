@@ -475,4 +475,12 @@ public sealed class AsyncOneManyLock
         Unlock();
         if (accessGranter != null) accessGranter.SetResult(null);
     }
+
+    private static async Task AccessResourceViaAsyncSynchronization(
+        AsyncOneManyLock asyncLock)
+    {
+        await asyncLock.AcquireAsync(OneManyMode.Shared);
+
+        asyncLock.Release();
+    }
 }
