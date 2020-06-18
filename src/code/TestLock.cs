@@ -3,6 +3,7 @@ using System.Threading;
 using System;
 using System.Diagnostics;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 
 internal class TestLock
@@ -355,7 +356,7 @@ internal sealed class SynchronizedQueue<T>
     public T Dequeue()
     {
         Monitor.Enter(m_lock);
-        while(m_queue.Count == 0)
+        while (m_queue.Count == 0)
         {
             Monitor.Wait(m_lock);
         }
@@ -365,7 +366,7 @@ internal sealed class SynchronizedQueue<T>
         return item;
     }
 
-    public Int32  Count()
+    public Int32 Count()
     {
         return m_queue.Count;
     }
@@ -378,5 +379,100 @@ internal sealed class SynchronizedQueue<T>
         queue.Enqueue(521);
 
         Console.WriteLine("Dequeue {0} , Count {1}.", queue.Dequeue(), queue.Count());
+    }
+}
+
+public enum OneManyMode { Exclusive, Shared }
+public sealed class AsyncOneManyLock
+{
+    private SpinLock m_lock = new SpinLock(true);
+    private void Lock() { Boolean taken = false; m_lock.Enter(ref taken); }
+    private void Unlock() { m_lock.Exit(); }
+
+
+    private Int32 m_state = 0;
+    private Boolean IsFree { get { return m_state == 0; } }
+    private Boolean IsOwnedByWriter { get { return m_state == -1; } }
+    private Boolean IsOwnedByReaders { get { return m_state > 0; } }
+    private Int32 AddReaders(Int32 count) { return m_state += count; }
+    private Int32 SubractReader() { return --m_state; }
+    private void MakeWriter() { m_state = -1; }
+    private void MakeFree() { m_state = 0; }
+
+    private readonly Task m_noContentionAccessGranter;
+    // Writer 
+    private readonly Queue<TaskCompletionSource<Object>> m_qWaitingWriters =
+        new Queue<TaskCompletionSource<object>>();
+    // Reader
+    private TaskCompletionSource<Object> m_waitingReadersSignal =
+        new TaskCompletionSource<object>();
+
+    private Int32 m_numWaitingReader = 0;
+
+    public AsyncOneManyLock()
+    {
+        m_noContentionAccessGranter = Task.FromResult<Object>(null);
+    }
+
+    public Task WaitAsync(OneManyMode mode)
+    {
+        Task accressGranter = m_noContentionAccessGranter;
+
+        Lock();
+
+        switch (mode)
+        {
+            case OneManyMode.Exclusive:
+                if (IsFree)
+                {
+                    MakeWriter();
+                }
+                else
+                {
+                    var tcs = new TaskCompletionSource<Object>();
+                    m_qWaitingWriters.Enqueue(tcs);
+                    accressGranter = tcs.Task;
+                }
+                break;
+            case OneManyMode.Shared:
+                if (IsFree || (IsOwnedByReaders && m_qWaitingWriters.Count == 0))
+                {
+                    AddReaders(1);
+                }
+                else
+                {
+                    m_numWaitingReader++;
+                    accressGranter = m_waitingReadersSignal.Task.ContinueWith(t => t.Result);
+                }
+                break;
+        }
+        Unlock();
+        return accressGranter;
+    }
+
+    public void Release()
+    {
+        TaskCompletionSource<Object> accessGranter = null;
+        Lock();
+        if (IsOwnedByWriter) MakeFree();
+        else { SubractReader(); }
+
+        if (IsFree)
+        {
+            if (m_qWaitingWriters.Count > 0)
+            {
+                MakeWriter();
+                accessGranter = m_qWaitingWriters.Dequeue();
+            }
+            else if (m_numWaitingReader > 0)
+            {
+                AddReaders(m_numWaitingReader);
+                m_numWaitingReader = 0;
+                accessGranter = m_waitingReadersSignal;
+                m_waitingReadersSignal = new TaskCompletionSource<object>;
+            }
+        }
+        Unlock();
+        if (accessGranter != null) accessGranter.SetResult(null);
     }
 }
