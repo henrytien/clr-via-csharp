@@ -9,6 +9,7 @@ internal class TestLock
     {
         SimpleHybirdLock.Go();
         LazyDemo.Go();
+        LazyDemo.Go1();
     }
 }
 
@@ -289,5 +290,18 @@ internal sealed class LazyDemo
         Console.WriteLine(s.IsValueCreated);
         Thread.Sleep(1000);
         Console.WriteLine(s.Value);
+    }
+
+    public static void Go1()
+    {
+        string name = null;
+        LazyInitializer.EnsureInitialized(ref name, () => "Henry");
+
+        Console.WriteLine(name);
+
+        LazyInitializer.EnsureInitialized(ref name, () => "Mj");
+        string saying = null;
+        LazyInitializer.EnsureInitialized(ref saying, () => "I love mj");
+        Console.WriteLine(saying);
     }
 }
