@@ -325,7 +325,10 @@ The easiest way to access the System Monitor control is to run PerfMon.exe.
 
 - [C++ Vs. C# - What’s the Difference?](https://www.guru99.com/cpp-vs-c-sharp.html)
 - [Difference between semaphore and semaphoreslim?](https://docs.microsoft.com/en-us/dotnet/standard/threading/semaphore-and-semaphoreslim)
-- [SpinWait vs Sleep waiting. Which one to use?](https://stackoverflow.com/questions/9719003/spinwait-vs-sleep-waiting-which-one-to-use)
+- [SpinWait vs Sleep waiting. Which one to use?](https://stackoverflow.com/questions/9719003/spinwait-vs-sleep-waiting-which-one-to-use) 
+- [Need to understand the usage of SemaphoreSlim?](https://stackoverflow.com/questions/20056727/need-to-understand-the-usage-of-semaphoreslim) 
+- [SpinWait vs Sleep waiting. Which one to use?](https://stackoverflow.com/questions/9719003/spinwait-vs-sleep-waiting-which-one-to-use) 
+- [How to “sleep” until timeout or cancellation is requested in .NET 4.0](https://stackoverflow.com/questions/18715099/how-to-sleep-until-timeout-or-cancellation-is-requested-in-net-4-0)
 
 ## Awesome Questions
 
