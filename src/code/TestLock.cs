@@ -9,13 +9,13 @@ using System.Collections.Concurrent;
 
 internal class TestLock
 {
-    public static void Main()
+    public static void Main1()
     {
         //SimpleHybirdLock.Go();
         //LazyDemo.Go();
         //LazyDemo.Go1();
         //SynchronizedQueueTest<Int32>.Go();
-        ConsumerModel.Go();
+        //ConsumerModel.Go();
     }
 }
 
@@ -514,5 +514,47 @@ internal sealed class ConsumerModel
 
         }
         Console.WriteLine("All items have been consumed.");
+    }
+}
+
+namespace NightClub
+{
+    public class Program
+    {
+        public static Semaphore Bouncer { get; set; }
+
+        public static void Main(string[] args)
+        {
+            // Create 3 semaphore of with 3 slots, where 3 are availiable.
+            Bouncer = new Semaphore(3, 3);
+
+            // Open the nightclub
+            OpenNightClub();
+        }
+
+        public static void OpenNightClub()
+        {
+            for (int i = 0; i < 50; i++)
+            {
+                // Let each guets enter each thread.
+                Thread thread = new Thread(new ParameterizedThreadStart(Guest));
+                thread.Start(i);
+            }
+        }
+
+        public static void Guest(Object args)
+        {
+            // Wait to enter the nightclub(a semaphore will be realeased.)
+            Console.WriteLine("Guest {0} is waitting to entering the nightclub.", args);
+            Bouncer.WaitOne();
+
+            // Doing some dancing
+            Console.WriteLine("Guest {0} is doing some dancing.", args);
+            Thread.Sleep(500);
+
+            // Let one guest out(release one semaphore)
+            Console.WriteLine("Guest {0} is leaving the nightclub.", args);
+            Bouncer.Release();
+        }
     }
 }
