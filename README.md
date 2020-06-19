@@ -335,6 +335,8 @@ The easiest way to access the System Monitor control is to run PerfMon.exe.
 - [Semaphore vs. Monitors - what's the difference?](https://stackoverflow.com/questions/7335950/semaphore-vs-monitors-whats-the-difference) 
 - [Difference between wait() and sleep()?](https://stackoverflow.com/questions/1036754/difference-between-wait-and-sleep)
 - [How to check possibility of deadlock in c# code](https://stackoverflow.com/questions/54001297/how-to-check-possibility-of-deadlock-in-c-sharp-code)
+- [Multiple awaits vs Task.WaitAll - equivalent?](https://stackoverflow.com/questions/32119507/multiple-awaits-vs-task-waitall-equivalent)
+- [Await on a completed task same as task.Result?](https://stackoverflow.com/questions/24623120/await-on-a-completed-task-same-as-task-result)
 
 ## Awesome Questions
 
