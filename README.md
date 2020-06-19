@@ -321,7 +321,7 @@ The easiest way to access the System Monitor control is to run PerfMon.exe.
 - [High-Performance Server Architecture](http://pl.atyp.us/content/tech/servers.html) 
 - [Understanding reactor pattern with java](http://kasunpanorama.blogspot.com/2015/04/understanding-reactor-pattern-with-java.html)
 
-## Questions
+## StackOverflow Questions
 
 - [C++ Vs. C# - What’s the Difference?](https://www.guru99.com/cpp-vs-c-sharp.html)
 - [Difference between semaphore and semaphoreslim?](https://docs.microsoft.com/en-us/dotnet/standard/threading/semaphore-and-semaphoreslim)
@@ -330,6 +330,11 @@ The easiest way to access the System Monitor control is to run PerfMon.exe.
 - [How to “sleep” until timeout or cancellation is requested in .NET 4.0](https://stackoverflow.com/questions/18715099/how-to-sleep-until-timeout-or-cancellation-is-requested-in-net-4-0)
 - [Difference between decimal, float and double in .NET?](https://stackoverflow.com/questions/618535/difference-between-decimal-float-and-double-in-net)  
 - [What's the purpose of Thread.SpinWait method?](https://stackoverflow.com/questions/1091135/whats-the-purpose-of-thread-spinwait-method)
+- [What is a semaphore?](https://stackoverflow.com/questions/34519/what-is-a-semaphore) 
+- [Lock, mutex, semaphor,  what's the difference?](https://stackoverflow.com/questions/2332765/lock-mutex-semaphore-whats-the-difference) 
+- [Semaphore vs. Monitors - what's the difference?](https://stackoverflow.com/questions/7335950/semaphore-vs-monitors-whats-the-difference) 
+- [Difference between wait() and sleep()?](https://stackoverflow.com/questions/1036754/difference-between-wait-and-sleep)
+- [How to check possibility of deadlock in c# code](https://stackoverflow.com/questions/54001297/how-to-check-possibility-of-deadlock-in-c-sharp-code)
 
 ## Awesome Questions
 
