@@ -287,7 +287,6 @@ The easiest way to access the System Monitor control is to run PerfMon.exe.
 ## Advanced Concepts
 
 1. **What is a Delegate?**
-
 31. **What are Events?**
 32. **How to use Delegates with Events?**
 33. **What are the different types of Delegates?**
@@ -307,6 +306,7 @@ The easiest way to access the System Monitor control is to run PerfMon.exe.
 47. **What is Thread Pooling?**
 48. **What is Serialization?**
 49. **What are the types of Serialization?** 
+21. [Top 10 C# .NET Multithreading Interview Questions](http://dotnetpattern.com/multi-threading-interview-questions)
 
 [Answers are here](https://www.softwaretestinghelp.com/c-sharp-interview-questions/) 
 
@@ -336,7 +336,7 @@ The easiest way to access the System Monitor control is to run PerfMon.exe.
 - [Difference between wait() and sleep()?](https://stackoverflow.com/questions/1036754/difference-between-wait-and-sleep)
 - [How to check possibility of deadlock in c# code](https://stackoverflow.com/questions/54001297/how-to-check-possibility-of-deadlock-in-c-sharp-code)
 - [Multiple awaits vs Task.WaitAll - equivalent?](https://stackoverflow.com/questions/32119507/multiple-awaits-vs-task-waitall-equivalent)
-- [Await on a completed task same as task.Result?](https://stackoverflow.com/questions/24623120/await-on-a-completed-task-same-as-task-result)
+- [Await on a completed task same as task.Result?](https://stackoverflow.com/questions/24623120/await-on-a-completed-task-same-as-task-result) 
 
 ## Awesome Questions
 
