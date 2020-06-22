@@ -337,6 +337,8 @@ The easiest way to access the System Monitor control is to run PerfMon.exe.
 - [How to check possibility of deadlock in c# code](https://stackoverflow.com/questions/54001297/how-to-check-possibility-of-deadlock-in-c-sharp-code)
 - [Multiple awaits vs Task.WaitAll - equivalent?](https://stackoverflow.com/questions/32119507/multiple-awaits-vs-task-waitall-equivalent)
 - [Await on a completed task same as task.Result?](https://stackoverflow.com/questions/24623120/await-on-a-completed-task-same-as-task-result) 
+- [ConcurrentBag and lock(List) which is faster to add or remove?](https://stackoverflow.com/questions/29307035/concurrentbagt-and-locklistt-which-is-faster-to-add-or-remove)
+- [No ConcurrentList in .Net 4.0?](https://stackoverflow.com/questions/6601611/no-concurrentlistt-in-net-4-0)
 
 ## Awesome Questions
 
