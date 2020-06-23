@@ -339,6 +339,7 @@ The easiest way to access the System Monitor control is to run PerfMon.exe.
 - [Await on a completed task same as task.Result?](https://stackoverflow.com/questions/24623120/await-on-a-completed-task-same-as-task-result) 
 - [ConcurrentBag and lock(List) which is faster to add or remove?](https://stackoverflow.com/questions/29307035/concurrentbagt-and-locklistt-which-is-faster-to-add-or-remove)
 - [No ConcurrentList in .Net 4.0?](https://stackoverflow.com/questions/6601611/no-concurrentlistt-in-net-4-0)
+- [What's the difference between Invoke() and BeginInvoke()?](https://stackoverflow.com/questions/229554/whats-the-difference-between-invoke-and-begininvoke)
 
 ## Awesome Questions
 
